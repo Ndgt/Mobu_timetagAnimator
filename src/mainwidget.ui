@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>750</width>
-    <height>460</height>
+    <height>475</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -31,12 +31,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_11">
+  <layout class="QVBoxLayout" name="verticalLayout_13">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_13">
-     <property name="spacing">
-      <number>10</number>
-     </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_8">
      <property name="bottomMargin">
       <number>15</number>
      </property>
@@ -80,7 +77,13 @@
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <widget class="QTextEdit" name="textEdit"/>
+            <widget class="QTextEdit" name="navigateTextEdit">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -181,7 +184,7 @@
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_9">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <layout class="QHBoxLayout" name="horizontalLayout_12">
             <item>
              <widget class="QSlider" name="playerSlider">
               <property name="sizePolicy">
@@ -196,48 +199,69 @@
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="speedLabel">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Speed :</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QDoubleSpinBox" name="speedSpinBox">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>85</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="minimum">
-               <double>0.100000000000000</double>
-              </property>
-              <property name="maximum">
-               <double>2.000000000000000</double>
-              </property>
-              <property name="singleStep">
-               <double>0.100000000000000</double>
-              </property>
-              <property name="value">
-               <double>1.000000000000000</double>
-              </property>
-             </widget>
+             <layout class="QVBoxLayout" name="verticalLayout_6">
+              <item>
+               <widget class="QPushButton" name="startEndButton">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Play / Stop</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_11">
+                <item>
+                 <widget class="QLabel" name="speedLabel">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>Speed :</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QDoubleSpinBox" name="speedSpinBox">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>85</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="minimum">
+                   <double>0.100000000000000</double>
+                  </property>
+                  <property name="maximum">
+                   <double>2.000000000000000</double>
+                  </property>
+                  <property name="singleStep">
+                   <double>0.100000000000000</double>
+                  </property>
+                  <property name="value">
+                   <double>1.000000000000000</double>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
             </item>
            </layout>
           </item>
@@ -682,35 +706,44 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_6">
               <item>
-               <widget class="QPushButton" name="startEndButton">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Start Recording</string>
-                </property>
-                <property name="shortcut">
-                 <string>Ctrl+S</string>
-                </property>
-                <property name="autoDefault">
-                 <bool>false</bool>
-                </property>
-                <property name="default">
-                 <bool>false</bool>
-                </property>
-                <property name="flat">
-                 <bool>false</bool>
-                </property>
-               </widget>
+               <layout class="QVBoxLayout" name="verticalLayout_5">
+                <item>
+                 <widget class="QPushButton" name="addKeyButton">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {　
+　　background-color: rgb(255, 234, 199);
+}</string>
+                  </property>
+                  <property name="text">
+                   <string>Add Key</string>
+                  </property>
+                  <property name="shortcut">
+                   <string>Ctrl+S</string>
+                  </property>
+                  <property name="autoDefault">
+                   <bool>false</bool>
+                  </property>
+                  <property name="default">
+                   <bool>false</bool>
+                  </property>
+                  <property name="flat">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </item>
@@ -731,7 +764,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>Apply Keyframes</string>
+                 <string>Apply to Face</string>
                 </property>
                </widget>
               </item>
@@ -768,8 +801,128 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>startEndButton</sender>
+   <signal>clicked()</signal>
+   <receiver>toolWindow</receiver>
+   <slot>PlayStop()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>283</x>
+     <y>398</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>364</x>
+     <y>459</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>speedSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>toolWindow</receiver>
+   <slot>ChangePlaySpeed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>284</x>
+     <y>431</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>250</x>
+     <y>459</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chooseLyricsButton</sender>
+   <signal>clicked()</signal>
+   <receiver>toolWindow</receiver>
+   <slot>ChooseLyrics()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>73</x>
+     <y>57</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>749</x>
+     <y>183</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toHiraganaButton</sender>
+   <signal>clicked()</signal>
+   <receiver>toolWindow</receiver>
+   <slot>ConvertHiragana()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>184</x>
+     <y>56</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>742</x>
+     <y>70</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toAlphabetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>toolWindow</receiver>
+   <slot>ConvertAlphabet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>266</x>
+     <y>55</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>745</x>
+     <y>139</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addKeyButton</sender>
+   <signal>pressed()</signal>
+   <receiver>toolWindow</receiver>
+   <slot>AddKeyIn()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>486</x>
+     <y>388</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>696</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addKeyButton</sender>
+   <signal>released()</signal>
+   <receiver>toolWindow</receiver>
+   <slot>AddKeyOut()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>455</x>
+     <y>396</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>679</x>
+     <y>5</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
   <slot>Play()</slot>
+  <slot>PlayStop()</slot>
+  <slot>ChangePlaySpeed()</slot>
+  <slot>ChooseLyrics()</slot>
+  <slot>ConvertHiragana()</slot>
+  <slot>ConvertAlphabet()</slot>
+  <slot>AddKeyIn()</slot>
+  <slot>AddKeyOut()</slot>
  </slots>
 </ui>

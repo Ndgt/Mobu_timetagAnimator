@@ -10,7 +10,6 @@ except:
 
 from ui_timetagAnimator import Ui_toolWindow
 
-import makeList
 import L_Edit
 
 class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
@@ -73,7 +72,9 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         self.sys.OnConnectionDataNotify.Remove(self.AddDataNotify)
 
     def charaComboUpdate(self,control,event):
-        items = [self.charaComboBox.itemText(i) for i in range(1,self.charaComboBox.count())] 
+        items = []
+        for i in range(1,self.charaComboBox.count()):
+            items.append(self.charaComboBox.itemText(i)) 
         for chara in FBSystem().Scene.Characters:
             if not chara is None:
                 if not chara.Name in items:
@@ -139,7 +140,7 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
             self.lyricsTextEdit.setFocus()
 
 
-    def ConvertText(self):
+    def ConvertHiragana(self):
         lyrics_converted = L_Edit.ConvertLyrics(self.lyricsTextEdit.toPlainText(),"hiragana")
         if not type(lyrics_converted) == ModuleNotFoundError:
             self.lyricsTextEdit.clear()
@@ -153,7 +154,7 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
             self.lyricsTextEdit.setTextCursor(cursor)
             self.lyricsTextEdit.setFocus()
 
-    def SplitText(self):
+    def ConvertAlphabet(self):
         lyrics_converted = L_Edit.ConvertLyrics(self.lyricsTextEdit.toPlainText(),"alphabet")
         if not type(lyrics_converted) == ModuleNotFoundError:
             self.lyricsTextEdit.clear()
@@ -178,10 +179,11 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
     """
     Player Control functions
     """
-    def StartEnd(self):
-        if self.playcontrol.IsPlaying:
+    def PlayStop(self):
+        if self.playcontrol.IsPlaying or self.playcontrol.GetEditCurrentTime() == self.playcontrol.LoopStop:
             self.playcontrol.Stop()
             self.startEndButton.setText("Start Recording")
+
         else:
             self.playcontrol.Play()
             self.startEndButton.setText("Recording ...")
@@ -209,8 +211,12 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
             self.playcontrol.Goto(FBTime(0,0,0,specified_frame))
 
 
+    def AddKeyIn(self):
+        self.navigateTextEdit.append("key  ")
+        self.pressed_time = FBSystem().LocalTime.GetSecondDouble()
+        self.navigateTextEdit.insertPlainText(f"{self.pressed_time:.4f} ")
 
-    
-    """
-    Music Import functions
-    """
+
+    def AddKeyOut(self):
+        self.released_time = FBSystem().LocalTime.GetSecondDouble()
+        self.navigateTextEdit.insertPlainText(f"{self.released_time:.4f} ")

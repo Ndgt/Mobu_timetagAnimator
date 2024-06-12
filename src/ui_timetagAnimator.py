@@ -8,8 +8,6 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6 import QtCore
-
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
@@ -26,7 +24,7 @@ class Ui_toolWindow(object):
     def setupUi(self, toolWindow):
         if not toolWindow.objectName():
             toolWindow.setObjectName(u"toolWindow")
-        toolWindow.resize(750, 460)
+        toolWindow.resize(750, 475)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -34,12 +32,11 @@ class Ui_toolWindow(object):
         toolWindow.setSizePolicy(sizePolicy)
         toolWindow.setMinimumSize(QSize(700, 450))
         toolWindow.setMaximumSize(QSize(16777215, 600))
-        self.horizontalLayout_11 = QHBoxLayout(toolWindow)
-        self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
-        self.horizontalLayout_13 = QHBoxLayout()
-        self.horizontalLayout_13.setSpacing(10)
-        self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
-        self.horizontalLayout_13.setContentsMargins(-1, -1, -1, 15)
+        self.verticalLayout_13 = QVBoxLayout(toolWindow)
+        self.verticalLayout_13.setObjectName(u"verticalLayout_13")
+        self.horizontalLayout_8 = QHBoxLayout()
+        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
+        self.horizontalLayout_8.setContentsMargins(-1, -1, -1, 15)
         self.verticalLayout_15 = QVBoxLayout()
         self.verticalLayout_15.setObjectName(u"verticalLayout_15")
         self.lyricsTab = QTabWidget(toolWindow)
@@ -58,10 +55,13 @@ class Ui_toolWindow(object):
         self.tab_5.setObjectName(u"tab_5")
         self.verticalLayout_3 = QVBoxLayout(self.tab_5)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.textEdit = QTextEdit(self.tab_5)
-        self.textEdit.setObjectName(u"textEdit")
+        self.navigateTextEdit = QTextEdit(self.tab_5)
+        self.navigateTextEdit.setObjectName(u"navigateTextEdit")
+        font = QFont()
+        font.setPointSize(11)
+        self.navigateTextEdit.setFont(font)
 
-        self.verticalLayout_3.addWidget(self.textEdit)
+        self.verticalLayout_3.addWidget(self.navigateTextEdit)
 
         self.lyricsTab.addTab(self.tab_5, "")
         self.tab_6 = QWidget()
@@ -96,8 +96,6 @@ class Ui_toolWindow(object):
 
         self.lyricsTextEdit = QTextEdit(self.tab_6)
         self.lyricsTextEdit.setObjectName(u"lyricsTextEdit")
-        font = QFont()
-        font.setPointSize(11)
         self.lyricsTextEdit.setFont(font)
 
         self.verticalLayout_18.addWidget(self.lyricsTextEdit)
@@ -123,8 +121,8 @@ class Ui_toolWindow(object):
         self.playerControlGroup.setCheckable(False)
         self.horizontalLayout_9 = QHBoxLayout(self.playerControlGroup)
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
-        self.horizontalLayout_8 = QHBoxLayout()
-        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
+        self.horizontalLayout_12 = QHBoxLayout()
+        self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
         self.playerSlider = QSlider(self.playerControlGroup)
         self.playerSlider.setObjectName(u"playerSlider")
         sizePolicy3 = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Fixed)
@@ -134,15 +132,26 @@ class Ui_toolWindow(object):
         self.playerSlider.setSizePolicy(sizePolicy3)
         self.playerSlider.setOrientation(Qt.Orientation.Horizontal)
 
-        self.horizontalLayout_8.addWidget(self.playerSlider)
+        self.horizontalLayout_12.addWidget(self.playerSlider)
 
+        self.verticalLayout_6 = QVBoxLayout()
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.startEndButton = QPushButton(self.playerControlGroup)
+        self.startEndButton.setObjectName(u"startEndButton")
+        sizePolicy.setHeightForWidth(self.startEndButton.sizePolicy().hasHeightForWidth())
+        self.startEndButton.setSizePolicy(sizePolicy)
+
+        self.verticalLayout_6.addWidget(self.startEndButton)
+
+        self.horizontalLayout_11 = QHBoxLayout()
+        self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
         self.speedLabel = QLabel(self.playerControlGroup)
         self.speedLabel.setObjectName(u"speedLabel")
         sizePolicy1.setHeightForWidth(self.speedLabel.sizePolicy().hasHeightForWidth())
         self.speedLabel.setSizePolicy(sizePolicy1)
         self.speedLabel.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
 
-        self.horizontalLayout_8.addWidget(self.speedLabel)
+        self.horizontalLayout_11.addWidget(self.speedLabel)
 
         self.speedSpinBox = QDoubleSpinBox(self.playerControlGroup)
         self.speedSpinBox.setObjectName(u"speedSpinBox")
@@ -154,16 +163,22 @@ class Ui_toolWindow(object):
         self.speedSpinBox.setSingleStep(0.100000000000000)
         self.speedSpinBox.setValue(1.000000000000000)
 
-        self.horizontalLayout_8.addWidget(self.speedSpinBox)
+        self.horizontalLayout_11.addWidget(self.speedSpinBox)
 
 
-        self.horizontalLayout_9.addLayout(self.horizontalLayout_8)
+        self.verticalLayout_6.addLayout(self.horizontalLayout_11)
+
+
+        self.horizontalLayout_12.addLayout(self.verticalLayout_6)
+
+
+        self.horizontalLayout_9.addLayout(self.horizontalLayout_12)
 
 
         self.verticalLayout_15.addWidget(self.playerControlGroup)
 
 
-        self.horizontalLayout_13.addLayout(self.verticalLayout_15)
+        self.horizontalLayout_8.addLayout(self.verticalLayout_15)
 
         self.verticalLayout_16 = QVBoxLayout()
         self.verticalLayout_16.setObjectName(u"verticalLayout_16")
@@ -419,15 +434,23 @@ class Ui_toolWindow(object):
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
         self.horizontalLayout_6 = QHBoxLayout()
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.startEndButton = QPushButton(self.recordingGroup)
-        self.startEndButton.setObjectName(u"startEndButton")
-        sizePolicy4.setHeightForWidth(self.startEndButton.sizePolicy().hasHeightForWidth())
-        self.startEndButton.setSizePolicy(sizePolicy4)
-        self.startEndButton.setMaximumSize(QSize(16777215, 50))
-        self.startEndButton.setAutoDefault(False)
-        self.startEndButton.setFlat(False)
+        self.verticalLayout_5 = QVBoxLayout()
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.addKeyButton = QPushButton(self.recordingGroup)
+        self.addKeyButton.setObjectName(u"addKeyButton")
+        sizePolicy4.setHeightForWidth(self.addKeyButton.sizePolicy().hasHeightForWidth())
+        self.addKeyButton.setSizePolicy(sizePolicy4)
+        self.addKeyButton.setMaximumSize(QSize(16777215, 50))
+        self.addKeyButton.setStyleSheet(u"QPushButton {\u3000\n"
+"\u3000\u3000background-color: rgb(255, 234, 199);\n"
+"}")
+        self.addKeyButton.setAutoDefault(False)
+        self.addKeyButton.setFlat(False)
 
-        self.horizontalLayout_6.addWidget(self.startEndButton)
+        self.verticalLayout_5.addWidget(self.addKeyButton)
+
+
+        self.horizontalLayout_6.addLayout(self.verticalLayout_5)
 
 
         self.horizontalLayout_7.addLayout(self.horizontalLayout_6)
@@ -463,23 +486,24 @@ class Ui_toolWindow(object):
         self.verticalLayout_16.addWidget(self.recordingGroup)
 
 
-        self.horizontalLayout_13.addLayout(self.verticalLayout_16)
+        self.horizontalLayout_8.addLayout(self.verticalLayout_16)
 
 
-        self.horizontalLayout_11.addLayout(self.horizontalLayout_13)
+        self.verticalLayout_13.addLayout(self.horizontalLayout_8)
 
 
         self.retranslateUi(toolWindow)
+        self.startEndButton.clicked.connect(toolWindow.PlayStop)
+        self.speedSpinBox.valueChanged.connect(toolWindow.ChangePlaySpeed)
+        self.chooseLyricsButton.clicked.connect(toolWindow.ChooseLyrics)
+        self.toHiraganaButton.clicked.connect(toolWindow.ConvertHiragana)
+        self.toAlphabetButton.clicked.connect(toolWindow.ConvertAlphabet)
+        self.addKeyButton.pressed.connect(toolWindow.AddKeyIn)
+        self.addKeyButton.released.connect(toolWindow.AddKeyOut)
 
         self.lyricsTab.setCurrentIndex(0)
         self.shapekeyTab.setCurrentIndex(0)
-        self.startEndButton.setDefault(False)
-
-        self.startEndButton.connect(QtCore.SIGNAL("clicked()"), toolWindow.StartEnd)
-        self.speedSpinBox.connect(QtCore.SIGNAL("valueChanged(double)"),toolWindow.ChangePlaySpeed)
-        self.chooseLyricsButton.connect(QtCore.SIGNAL("clicked()"),toolWindow.ChooseLyrics)
-        self.toHiraganaButton.connect(QtCore.SIGNAL("clicked()"),toolWindow.ConvertText)
-        self.toAlphabetButton.connect(QtCore.SIGNAL("clicked()"),toolWindow.SplitText)
+        self.addKeyButton.setDefault(False)
 
 
         QMetaObject.connectSlotsByName(toolWindow)
@@ -493,6 +517,7 @@ class Ui_toolWindow(object):
         self.toAlphabetButton.setText(QCoreApplication.translate("toolWindow", u"To Alphabet", None))
         self.lyricsTab.setTabText(self.lyricsTab.indexOf(self.tab_6), QCoreApplication.translate("toolWindow", u"Edit Lyrics Text", None))
         self.playerControlGroup.setTitle(QCoreApplication.translate("toolWindow", u"Player Control", None))
+        self.startEndButton.setText(QCoreApplication.translate("toolWindow", u"Play / Stop", None))
         self.speedLabel.setText(QCoreApplication.translate("toolWindow", u"Speed :", None))
         self.selectCharacterGroup.setTitle(QCoreApplication.translate("toolWindow", u" Select Character ", None))
         self.characterLabel.setText(QCoreApplication.translate("toolWindow", u"Character : ", None))
@@ -508,11 +533,11 @@ class Ui_toolWindow(object):
         self.sk_Label_other_3.setText(QCoreApplication.translate("toolWindow", u"Shape 3 :", None))
         self.shapekeyTab.setTabText(self.shapekeyTab.indexOf(self.tab_2), QCoreApplication.translate("toolWindow", u"Other Shape", None))
         self.recordingGroup.setTitle(QCoreApplication.translate("toolWindow", u" Recording ", None))
-        self.startEndButton.setText(QCoreApplication.translate("toolWindow", u"Start Recording", None))
+        self.addKeyButton.setText(QCoreApplication.translate("toolWindow", u"Add Key", None))
 #if QT_CONFIG(shortcut)
-        self.startEndButton.setShortcut(QCoreApplication.translate("toolWindow", u"Ctrl+S", None))
+        self.addKeyButton.setShortcut(QCoreApplication.translate("toolWindow", u"Ctrl+S", None))
 #endif // QT_CONFIG(shortcut)
-        self.applyKeyframesButton.setText(QCoreApplication.translate("toolWindow", u"Apply Keyframes", None))
+        self.applyKeyframesButton.setText(QCoreApplication.translate("toolWindow", u"Apply to Face", None))
         self.exportAsTextButton.setText(QCoreApplication.translate("toolWindow", u"Export as .txt", None))
     # retranslateUi
 
