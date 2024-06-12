@@ -16,48 +16,65 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         super().__init__(pWigholder)
         self.setupUi(self)
 
-        # add characters in comboBox
-        self.charaComboBox.addItem("")
-        for chara in FBSystem().Scene.Characters:
+        """
+        about charaCombobox
+        """
+        # system event
+        self.sys = FBSystem()
+        self.app = FBApplication()
+        self.sys.OnConnectionDataNotify.Add(self.charaComboUpdate)
+        self.app.OnFileExit.Add(self.DataNotifyRemove)
+        
+        # setup the content 
+        self.charaComboBox.addItem("character not selected")
+        for chara in self.sys.Scene.Characters:
             self.charaComboBox.addItem(chara.Name)
-
         # connect signal with charaComboBox
-        self.charaComboBox.currentIndexChanged.connect(self.updateComboBox)
-        
-        # add characters in comboBox
-        self.charaComboBox.addItem("")
-        for chara in FBSystem().Scene.Characters:
-            self.charaComboBox.addItem(chara.Name)
+        self.charaComboBox.currentIndexChanged.connect(self.updateComboBoxes)
 
+
+        """
+        about shapekey comboboxes
+        """
+        self.comboboxes = [self.comboBox_1,
+                           self.comboBox_2,
+                           self.comboBox_3,
+                           self.comboBox_4,
+                           self.comboBox_5,
+                           self.comboBox_6,
+                           self.comboBox_7,
+                           self.comboBox_8]
         
-        self.vowel = ["a","i","u","e","o"] 
-        self.vowelSKcontainModelList = [list(),list(),list(),list(),list()]
+        for cbox in self.comboboxes:
+            cbox.addItem("shapekey not selected")
+
         self.shapeList = makeList.ReturnList("Allshapekey")
-        
-        self.comboBox_1.addItem("shapekey not selected")
-        self.comboBox_2.addItem("shapekey not selected")
-        self.comboBox_3.addItem("shapekey not selected")
-        self.comboBox_4.addItem("shapekey not selected")
-        self.comboBox_5.addItem("shapekey not selected")
-        self.comboBox_6.addItem("shapekey not selected")
-        self.comboBox_7.addItem("shapekey not selected")
-        self.comboBox_8.addItem("shapekey not selected")
 
         for name in self.shapeList:
-            self.comboBox_1.addItem(name)
-            self.comboBox_2.addItem(name)
-            self.comboBox_3.addItem(name)
-            self.comboBox_4.addItem(name)
-            self.comboBox_5.addItem(name)
-            self.comboBox_6.addItem(name)
-            self.comboBox_7.addItem(name)
-            self.comboBox_8.addItem(name)
+            for cbox in self.comboboxes:
+                cbox.addItem(name)
 
 
-        # for player controls
+        """
+        about player control
+        """
         self.playcontrol = FBPlayerControl()
         self.startframe = self.playcontrol.LoopStart.GetFrame()
         self.endframe = self.playcontrol.LoopStop.GetFrame()
+
+
+    def AddDataNotify(self):
+        self.charaComboUpdate()
+
+    def DataNotifyRemove(self):
+        self.sys.OnConnectionDataNotify.Remove(self.AddDataNotify)
+
+    def charaComboUpdate(self,control,event):
+        items = [self.charaComboBox.itemText(i) for i in range(1,self.charaComboBox.count())] 
+        for chara in FBSystem().Scene.Characters:
+            if not chara is None:
+                if not chara.Name in items:
+                    self.charaComboBox.addItem(chara.Name)
 
 
     # return All shapekey name in character user selected
@@ -66,7 +83,6 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         returnList = []
         # get current selected character
         chara = FBSystem().Scene.Characters.__getitem__(self.charaComboBox.currentIndex()-1)
-        
         # get all meshes related to the character
         chara.GetSkinModelList(mList)
         for mesh in mList:
@@ -78,20 +94,14 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         return returnList
 
 
-    def charaComboUpdate(self):
-        items = [self.charaComboBox.itemText(i) for i in range(self.charaComboBox.count())] 
-        for chara in FBSystem().Scene.Characters:
-            if not chara in items:
-                self.charaComboBox.addItem(chara.Name)
-
 
     # update character combobox when user select new item
-    def updateComboBox(self):
-        for cobox in self.comboboxes:
-            cobox.clear()
-            cobox.addItem("select shapekey")
+    def updateComboBoxes(self):
+        for cbox in self.comboboxes:
+            cbox.clear()
+            cbox.addItem("shapekey not selected")
             for shapekey in self.ReturnCharaShape():
-                cobox.addItem(shapekey)
+                cbox.addItem(shapekey)
 
 
     '''
@@ -115,13 +125,26 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
             else:
                 FBMessageBox("Caution","Error : Selected file is not text file.","OK")
 
+            # focus on the start
+            cursor = self.lyricsTextEdit.textCursor()
+            cursor.movePosition(cursor.atStart)
+            self.lyricsTextEdit.setTextCursor(cursor)
+            self.lyricsTextEdit.setFocus()
 
     def ConvertText(self):
         lyrics_converted = L_Edit.ConvertLyrics(self.lyricsTextEdit.toPlainText(),"hiragana")
         if not type(lyrics_converted) == ModuleNotFoundError:
             self.lyricsTextEdit.clear()
+
             for line in lyrics_converted.split("\n"):
                 self.lyricsTextEdit.append(line)
+
+            # focus on the start
+            cursor = self.lyricsTextEdit.textCursor()
+            cursor.movePosition(cursor.atStart)
+            self.lyricsTextEdit.setTextCursor(cursor)
+            self.lyricsTextEdit.setFocus()
+
 
     def SplitText(self):
         lyrics_converted = L_Edit.ConvertLyrics(self.lyricsTextEdit.toPlainText(),"alphabet")
@@ -137,7 +160,13 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
                     # split line with a slash for each vowerl
                     if char in vowels:
                         finalline += "/"                
-                self.lyricsTextEdit.append(finalline)    
+                self.lyricsTextEdit.append(finalline) 
+        
+            # focus on the start
+            cursor = self.lyricsTextEdit.textCursor()
+            cursor.movePosition(cursor.atStart)
+            self.lyricsTextEdit.setTextCursor(cursor)
+            self.lyricsTextEdit.setFocus()
 
 
 
