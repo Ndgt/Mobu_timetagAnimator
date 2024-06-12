@@ -3,8 +3,10 @@ from pyfbsdk_additions import*
 
 try:
     from PySide6 import QtWidgets
+    from PySide6.QtGui import QTextCursor
 except:
     from PySide2 import QtWidgets
+    from PySide2.QtGui import QTextCursor
 
 from ui_timetagAnimator import Ui_toolWindow
 
@@ -48,11 +50,12 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         for cbox in self.comboboxes:
             cbox.addItem("shapekey not selected")
 
-        self.shapeList = makeList.ReturnList("Allshapekey")
+        self.shapeList = self.ReturnCharaShape()
 
-        for name in self.shapeList:
-            for cbox in self.comboboxes:
-                cbox.addItem(name)
+        if not self.shapeList is None:
+           for name in self.shapeList:
+                for cbox in self.comboboxes:
+                    cbox.addItem(name)
 
 
         """
@@ -82,16 +85,18 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         mList = FBModelList()
         returnList = []
         # get current selected character
-        chara = FBSystem().Scene.Characters.__getitem__(self.charaComboBox.currentIndex()-1)
-        # get all meshes related to the character
-        chara.GetSkinModelList(mList)
-        for mesh in mList:
-            geo = mesh.Geometry
-            for i in range(geo.ShapeGetCount()):
-                name = geo.ShapeGetName(i)
-                if not name in returnList:
-                    returnList.append(name)
-        return returnList
+        if self.charaComboBox.count() > 1:
+            chara = FBSystem().Scene.Characters.__getitem__(self.charaComboBox.currentIndex()-1)
+        
+            # get all meshes related to the character
+            chara.GetSkinModelList(mList)
+            for mesh in mList:
+                geo = mesh.Geometry
+                for i in range(geo.ShapeGetCount()):
+                    name = geo.ShapeGetName(i)
+                    if not name in returnList:
+                        returnList.append(name)
+            return returnList
 
 
 
@@ -100,8 +105,10 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         for cbox in self.comboboxes:
             cbox.clear()
             cbox.addItem("shapekey not selected")
-            for shapekey in self.ReturnCharaShape():
-                cbox.addItem(shapekey)
+            slist = self.ReturnCharaShape()
+            if not slist is None:
+                for shapekey in slist:
+                    cbox.addItem(shapekey)
 
 
     '''
@@ -127,9 +134,10 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
 
             # focus on the start
             cursor = self.lyricsTextEdit.textCursor()
-            cursor.movePosition(cursor.atStart)
+            cursor.movePosition(QTextCursor.Start)
             self.lyricsTextEdit.setTextCursor(cursor)
             self.lyricsTextEdit.setFocus()
+
 
     def ConvertText(self):
         lyrics_converted = L_Edit.ConvertLyrics(self.lyricsTextEdit.toPlainText(),"hiragana")
@@ -141,10 +149,9 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
 
             # focus on the start
             cursor = self.lyricsTextEdit.textCursor()
-            cursor.movePosition(cursor.atStart)
+            cursor.movePosition(QTextCursor.Start)
             self.lyricsTextEdit.setTextCursor(cursor)
             self.lyricsTextEdit.setFocus()
-
 
     def SplitText(self):
         lyrics_converted = L_Edit.ConvertLyrics(self.lyricsTextEdit.toPlainText(),"alphabet")
@@ -164,13 +171,9 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         
             # focus on the start
             cursor = self.lyricsTextEdit.textCursor()
-            cursor.movePosition(cursor.atStart)
+            cursor.movePosition(QTextCursor.Start)
             self.lyricsTextEdit.setTextCursor(cursor)
             self.lyricsTextEdit.setFocus()
-
-
-
-
     
     """
     Player Control functions
