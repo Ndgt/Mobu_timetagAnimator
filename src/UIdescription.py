@@ -65,6 +65,13 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         self.endframe = self.playcontrol.LoopStop.GetFrame()
 
 
+        """
+        about key add
+        """
+        self.cursor = self.lyricsTextEdit.textCursor()
+
+
+
     def AddDataNotify(self):
         self.charaComboUpdate()
 
@@ -134,9 +141,8 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
                 FBMessageBox("Caution","Error : Selected file is not text file.","OK")
 
             # focus on the start
-            cursor = self.lyricsTextEdit.textCursor()
-            cursor.movePosition(QTextCursor.Start)
-            self.lyricsTextEdit.setTextCursor(cursor)
+            self.cursor.movePosition(QTextCursor.Start)
+            self.lyricsTextEdit.setTextCursor(self.cursor)
             self.lyricsTextEdit.setFocus()
 
 
@@ -149,9 +155,8 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
                 self.lyricsTextEdit.append(line)
 
             # focus on the start
-            cursor = self.lyricsTextEdit.textCursor()
-            cursor.movePosition(QTextCursor.Start)
-            self.lyricsTextEdit.setTextCursor(cursor)
+            self.cursor.movePosition(QTextCursor.Start)
+            self.lyricsTextEdit.setTextCursor(self.cursor)
             self.lyricsTextEdit.setFocus()
 
     def ConvertAlphabet(self):
@@ -171,9 +176,9 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
                 self.lyricsTextEdit.append(finalline) 
         
             # focus on the start
-            cursor = self.lyricsTextEdit.textCursor()
-            cursor.movePosition(QTextCursor.Start)
-            self.lyricsTextEdit.setTextCursor(cursor)
+            self.cursor = self.lyricsTextEdit.textCursor()
+            self.cursor.movePosition(QTextCursor.Start)
+            self.lyricsTextEdit.setTextCursor(self.cursor)
             self.lyricsTextEdit.setFocus()
     
     """
@@ -185,6 +190,7 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
             self.startEndButton.setText("Start Recording")
 
         else:
+            self.cursor.setPosition(self.cursor.position())
             self.playcontrol.Play()
             self.startEndButton.setText("Recording ...")
 
@@ -211,12 +217,19 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
             self.playcontrol.Goto(FBTime(0,0,0,specified_frame))
 
 
+
+    """
+    Add Key functions
+    """
     def AddKeyIn(self):
-        self.navigateTextEdit.append("key  ")
         self.pressed_time = FBSystem().LocalTime.GetSecondDouble()
-        self.navigateTextEdit.insertPlainText(f"{self.pressed_time:.4f} ")
+        key = self.cursor.document().characterAt(self.cursor.position())
+        self.navigateTextEdit.append(key)
+        self.navigateTextEdit.insertPlainText("  ")
+        self.navigateTextEdit.insertPlainText(f"{self.pressed_time:.4f}   ")
+        self.cursor.movePosition(QTextCursor.Right)
 
 
     def AddKeyOut(self):
         self.released_time = FBSystem().LocalTime.GetSecondDouble()
-        self.navigateTextEdit.insertPlainText(f"{self.released_time:.4f} ")
+        self.navigateTextEdit.insertPlainText(f"{self.released_time:.4f}   ")
