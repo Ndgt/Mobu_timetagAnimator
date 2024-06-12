@@ -8,6 +8,12 @@
 #   with-sources: false
 
 -e file:.
+deprecated==1.2.14
+    # via pykakasi
+jaconv==0.3.4
+    # via pykakasi
+pykakasi==2.2.1
+    # via mobu-timetaganimator
 pyside6==6.7.1
     # via mobu-timetaganimator
 pyside6-addons==6.7.1
@@ -19,3 +25,5 @@ shiboken6==6.7.1
     # via pyside6
     # via pyside6-addons
     # via pyside6-essentials
+wrapt==1.16.0
+    # via deprecated
