@@ -22,7 +22,7 @@ import UIdescription
 class WigHolder(FBWidgetHolder):
     def WidgetCreate(self, pWigParent):
         self.HoldedWidgetObject = UIdescription.HoldedWidget(wrapInstance(pWigParent,
-                                                             QtWidgets.QWidget))
+                                                            QtWidgets.QWidget))
         return getCppPointer(self.HoldedWidgetObject)[0]
     
 
@@ -41,7 +41,7 @@ class WigTool(FBTool):
         self.WigHolderObject = WigHolder()
         self.PopulateLayout()
         self.StartSizeX = 750
-        self.StartSizeY = 460
+        self.StartSizeY = 475
         
 
 toolName = "timetagAnimator"

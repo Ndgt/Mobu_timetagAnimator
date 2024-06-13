@@ -3,10 +3,10 @@ from pyfbsdk_additions import*
 
 try:
     from PySide6 import QtWidgets
-    from PySide6.QtGui import QTextCursor
+    from PySide6.QtGui import QTextCursor, QMouseEvent
 except:
     from PySide2 import QtWidgets
-    from PySide2.QtGui import QTextCursor
+    from PySide2.QtGui import QTextCursor, QKeyEvent
 
 from ui_timetagAnimator import Ui_toolWindow
 
@@ -65,12 +65,7 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         self.endframe = self.playcontrol.LoopStop.GetFrame()
 
 
-        """
-        about key add
-        """
-        self.cursor = self.lyricsTextEdit.textCursor()
-
-
+        self.editorCursor = self.lyricsTextEdit.textCursor()
 
     def AddDataNotify(self):
         self.charaComboUpdate()
@@ -81,12 +76,11 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
     def charaComboUpdate(self,control,event):
         items = []
         for i in range(1,self.charaComboBox.count()):
-            items.append(self.charaComboBox.itemText(i)) 
-        for chara in FBSystem().Scene.Characters:
+            items.append(self.charaComboBox.itemText(i))
+        for chara in self.sys.Scene.Characters:
             if not chara is None:
                 if not chara.Name in items:
                     self.charaComboBox.addItem(chara.Name)
-
 
     # return All shapekey name in character user selected
     def ReturnCharaShape(self) -> list:
@@ -94,7 +88,7 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         returnList = []
         # get current selected character
         if self.charaComboBox.count() > 1:
-            chara = FBSystem().Scene.Characters.__getitem__(self.charaComboBox.currentIndex()-1)
+            chara = self.sys.Scene.Characters.__getitem__(self.charaComboBox.currentIndex()-1)
         
             # get all meshes related to the character
             chara.GetSkinModelList(mList)
@@ -141,9 +135,8 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
                 FBMessageBox("Caution","Error : Selected file is not text file.","OK")
 
             # focus on the start
-            self.cursor.movePosition(QTextCursor.Start)
-            self.lyricsTextEdit.setTextCursor(self.cursor)
-            self.lyricsTextEdit.setFocus()
+            self.editorCursor.movePosition(QTextCursor.Start)
+            self.lyricsTextEdit.setTextCursor(self.editorCursor)
 
 
     def ConvertHiragana(self):
@@ -155,9 +148,8 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
                 self.lyricsTextEdit.append(line)
 
             # focus on the start
-            self.cursor.movePosition(QTextCursor.Start)
-            self.lyricsTextEdit.setTextCursor(self.cursor)
-            self.lyricsTextEdit.setFocus()
+            self.editorCursor.movePosition(QTextCursor.Start)
+            self.lyricsTextEdit.setTextCursor(self.editorCursor)
 
     def ConvertAlphabet(self):
         lyrics_converted = L_Edit.ConvertLyrics(self.lyricsTextEdit.toPlainText(),"alphabet")
@@ -176,10 +168,8 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
                 self.lyricsTextEdit.append(finalline) 
         
             # focus on the start
-            self.cursor = self.lyricsTextEdit.textCursor()
-            self.cursor.movePosition(QTextCursor.Start)
-            self.lyricsTextEdit.setTextCursor(self.cursor)
-            self.lyricsTextEdit.setFocus()
+            self.editorCursor.movePosition(QTextCursor.Start)
+            self.lyricsTextEdit.setTextCursor(self.editorCursor)
     
     """
     Player Control functions
@@ -190,7 +180,9 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
             self.startEndButton.setText("Start Recording")
 
         else:
-            self.cursor.setPosition(self.cursor.position())
+            # get cursor position at the time
+            self.editorCursor = self.lyricsTextEdit.textCursor()
+
             self.playcontrol.Play()
             self.startEndButton.setText("Recording ...")
 
@@ -222,14 +214,41 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
     Add Key functions
     """
     def AddKeyIn(self):
-        self.pressed_time = FBSystem().LocalTime.GetSecondDouble()
-        key = self.cursor.document().characterAt(self.cursor.position())
-        self.navigateTextEdit.append(key)
-        self.navigateTextEdit.insertPlainText("  ")
-        self.navigateTextEdit.insertPlainText(f"{self.pressed_time:.4f}   ")
-        self.cursor.movePosition(QTextCursor.Right)
+        pressed_time = self.sys.LocalTime.GetSecondDouble()
+        pressed_frame = pressed_time*(self.playcontrol.GetTransportFpsValue())
 
+        key = self.editorCursor.document().characterAt(self.editorCursor.position())
+        
+        self.navigateTextEdit.append(key)
+        self.navigateTextEdit.insertPlainText("   ")
+        self.navigateTextEdit.insertPlainText(f"{pressed_frame:.4f}")
+        
+        counter = 1
+        while True:
+            self.editorCursor.movePosition(QTextCursor.Right)
+            nextkey = self.editorCursor.document().characterAt(self.editorCursor.position())
+            check = nextkey.encode("shift-jis","replace")
+            if check == b'?':
+                counter += 1
+                continue
+            else:
+                break
 
     def AddKeyOut(self):
-        self.released_time = FBSystem().LocalTime.GetSecondDouble()
-        self.navigateTextEdit.insertPlainText(f"{self.released_time:.4f}   ")
+        released_time = self.sys.LocalTime.GetSecondDouble()
+        released_frame = released_time*(self.playcontrol.GetTransportFpsValue())
+        self.navigateTextEdit.insertPlainText("   ")
+        self.navigateTextEdit.insertPlainText(f"{released_frame:.4f}")
+
+
+    """
+    Export Timetag functions
+    """
+    def ExportTimetagText(self):
+        cursor = self.navigateTextEdit.textCursor()
+        cursor.select(QTextCursor.Document)
+        timetags = cursor.selectedText()
+        print(type(timetags))
+        print(timetags)
+        cursor.movePosition(QTextCursor.End)
+        #cursor = self.navigateTextEdit.textCursor()

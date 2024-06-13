@@ -69,7 +69,7 @@
           <bool>false</bool>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="tab_5">
           <attribute name="title">
@@ -825,7 +825,7 @@
    <slot>ChangePlaySpeed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>284</x>
+     <x>294</x>
      <y>431</y>
     </hint>
     <hint type="destinationlabel">
@@ -857,8 +857,8 @@
    <slot>ConvertHiragana()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>184</x>
-     <y>56</y>
+     <x>211</x>
+     <y>70</y>
     </hint>
     <hint type="destinationlabel">
      <x>742</x>
@@ -873,8 +873,8 @@
    <slot>ConvertAlphabet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>266</x>
-     <y>55</y>
+     <x>292</x>
+     <y>70</y>
     </hint>
     <hint type="destinationlabel">
      <x>745</x>
@@ -889,7 +889,7 @@
    <slot>AddKeyIn()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>486</x>
+     <x>491</x>
      <y>388</y>
     </hint>
     <hint type="destinationlabel">
@@ -905,12 +905,28 @@
    <slot>AddKeyOut()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>455</x>
+     <x>491</x>
      <y>396</y>
     </hint>
     <hint type="destinationlabel">
      <x>679</x>
      <y>5</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>exportAsTextButton</sender>
+   <signal>clicked()</signal>
+   <receiver>toolWindow</receiver>
+   <slot>ExportTimetagText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>621</x>
+     <y>422</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1</x>
+     <y>430</y>
     </hint>
    </hints>
   </connection>
@@ -924,5 +940,6 @@
   <slot>ConvertAlphabet()</slot>
   <slot>AddKeyIn()</slot>
   <slot>AddKeyOut()</slot>
+  <slot>ExportTimetagText()</slot>
  </slots>
 </ui>

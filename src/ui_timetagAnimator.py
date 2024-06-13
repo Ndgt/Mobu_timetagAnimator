@@ -500,8 +500,9 @@ class Ui_toolWindow(object):
         self.toAlphabetButton.clicked.connect(toolWindow.ConvertAlphabet)
         self.addKeyButton.pressed.connect(toolWindow.AddKeyIn)
         self.addKeyButton.released.connect(toolWindow.AddKeyOut)
-        
-        self.lyricsTab.setCurrentIndex(0)
+        self.exportAsTextButton.clicked.connect(toolWindow.ExportTimetagText)
+
+        self.lyricsTab.setCurrentIndex(1)
         self.shapekeyTab.setCurrentIndex(0)
         self.addKeyButton.setDefault(False)
 
