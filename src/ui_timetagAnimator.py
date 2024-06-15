@@ -24,170 +24,37 @@ class Ui_toolWindow(object):
     def setupUi(self, toolWindow):
         if not toolWindow.objectName():
             toolWindow.setObjectName(u"toolWindow")
-        toolWindow.resize(750, 475)
+        toolWindow.resize(650, 500)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(toolWindow.sizePolicy().hasHeightForWidth())
         toolWindow.setSizePolicy(sizePolicy)
-        toolWindow.setMinimumSize(QSize(700, 450))
-        toolWindow.setMaximumSize(QSize(16777215, 600))
-        self.verticalLayout_13 = QVBoxLayout(toolWindow)
-        self.verticalLayout_13.setObjectName(u"verticalLayout_13")
-        self.horizontalLayout_8 = QHBoxLayout()
-        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
-        self.horizontalLayout_8.setContentsMargins(-1, -1, -1, 15)
-        self.verticalLayout_15 = QVBoxLayout()
-        self.verticalLayout_15.setObjectName(u"verticalLayout_15")
-        self.lyricsTab = QTabWidget(toolWindow)
-        self.lyricsTab.setObjectName(u"lyricsTab")
-        self.lyricsTab.setEnabled(True)
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Preferred)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.lyricsTab.sizePolicy().hasHeightForWidth())
-        self.lyricsTab.setSizePolicy(sizePolicy1)
-        self.lyricsTab.setMinimumSize(QSize(350, 0))
-        self.lyricsTab.setMaximumSize(QSize(1000, 16777215))
-        self.lyricsTab.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.lyricsTab.setAutoFillBackground(False)
-        self.tab_5 = QWidget()
-        self.tab_5.setObjectName(u"tab_5")
-        self.verticalLayout_3 = QVBoxLayout(self.tab_5)
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.navigateTextEdit = QTextEdit(self.tab_5)
-        self.navigateTextEdit.setObjectName(u"navigateTextEdit")
-        font = QFont()
-        font.setPointSize(11)
-        self.navigateTextEdit.setFont(font)
-
-        self.verticalLayout_3.addWidget(self.navigateTextEdit)
-
-        self.lyricsTab.addTab(self.tab_5, "")
-        self.tab_6 = QWidget()
-        self.tab_6.setObjectName(u"tab_6")
-        self.verticalLayout_17 = QVBoxLayout(self.tab_6)
+        toolWindow.setMinimumSize(QSize(600, 400))
+        toolWindow.setMaximumSize(QSize(750, 600))
+        self.verticalLayout_17 = QVBoxLayout(toolWindow)
         self.verticalLayout_17.setObjectName(u"verticalLayout_17")
-        self.verticalLayout_18 = QVBoxLayout()
-        self.verticalLayout_18.setObjectName(u"verticalLayout_18")
-        self.horizontalLayout_14 = QHBoxLayout()
-        self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
-        self.chooseLyricsButton = QPushButton(self.tab_6)
-        self.chooseLyricsButton.setObjectName(u"chooseLyricsButton")
-
-        self.horizontalLayout_14.addWidget(self.chooseLyricsButton)
-
-        self.toHiraganaButton = QPushButton(self.tab_6)
-        self.toHiraganaButton.setObjectName(u"toHiraganaButton")
-
-        self.horizontalLayout_14.addWidget(self.toHiraganaButton)
-
-        self.toAlphabetButton = QPushButton(self.tab_6)
-        self.toAlphabetButton.setObjectName(u"toAlphabetButton")
-
-        self.horizontalLayout_14.addWidget(self.toAlphabetButton)
-
-        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_14.addItem(self.horizontalSpacer_3)
-
-
-        self.verticalLayout_18.addLayout(self.horizontalLayout_14)
-
-        self.lyricsTextEdit = QTextEdit(self.tab_6)
-        self.lyricsTextEdit.setObjectName(u"lyricsTextEdit")
-        self.lyricsTextEdit.setFont(font)
-
-        self.verticalLayout_18.addWidget(self.lyricsTextEdit)
-
-
-        self.verticalLayout_17.addLayout(self.verticalLayout_18)
-
-        self.lyricsTab.addTab(self.tab_6, "")
-
-        self.verticalLayout_15.addWidget(self.lyricsTab)
-
-        self.playerControlGroup = QGroupBox(toolWindow)
-        self.playerControlGroup.setObjectName(u"playerControlGroup")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.playerControlGroup.sizePolicy().hasHeightForWidth())
-        self.playerControlGroup.setSizePolicy(sizePolicy2)
-        self.playerControlGroup.setMinimumSize(QSize(0, 0))
-        self.playerControlGroup.setMaximumSize(QSize(400, 16777215))
-        self.playerControlGroup.setSizeIncrement(QSize(0, 0))
-        self.playerControlGroup.setFlat(False)
-        self.playerControlGroup.setCheckable(False)
-        self.horizontalLayout_9 = QHBoxLayout(self.playerControlGroup)
-        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
-        self.horizontalLayout_12 = QHBoxLayout()
-        self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
-        self.playerSlider = QSlider(self.playerControlGroup)
-        self.playerSlider.setObjectName(u"playerSlider")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Fixed)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.playerSlider.sizePolicy().hasHeightForWidth())
-        self.playerSlider.setSizePolicy(sizePolicy3)
-        self.playerSlider.setOrientation(Qt.Orientation.Horizontal)
-
-        self.horizontalLayout_12.addWidget(self.playerSlider)
-
-        self.verticalLayout_6 = QVBoxLayout()
-        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
-        self.startEndButton = QPushButton(self.playerControlGroup)
-        self.startEndButton.setObjectName(u"startEndButton")
-        sizePolicy.setHeightForWidth(self.startEndButton.sizePolicy().hasHeightForWidth())
-        self.startEndButton.setSizePolicy(sizePolicy)
-
-        self.verticalLayout_6.addWidget(self.startEndButton)
-
-        self.horizontalLayout_11 = QHBoxLayout()
-        self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
-        self.speedLabel = QLabel(self.playerControlGroup)
-        self.speedLabel.setObjectName(u"speedLabel")
-        sizePolicy1.setHeightForWidth(self.speedLabel.sizePolicy().hasHeightForWidth())
-        self.speedLabel.setSizePolicy(sizePolicy1)
-        self.speedLabel.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
-
-        self.horizontalLayout_11.addWidget(self.speedLabel)
-
-        self.speedSpinBox = QDoubleSpinBox(self.playerControlGroup)
-        self.speedSpinBox.setObjectName(u"speedSpinBox")
-        sizePolicy3.setHeightForWidth(self.speedSpinBox.sizePolicy().hasHeightForWidth())
-        self.speedSpinBox.setSizePolicy(sizePolicy3)
-        self.speedSpinBox.setMaximumSize(QSize(85, 16777215))
-        self.speedSpinBox.setMinimum(0.100000000000000)
-        self.speedSpinBox.setMaximum(2.000000000000000)
-        self.speedSpinBox.setSingleStep(0.100000000000000)
-        self.speedSpinBox.setValue(1.000000000000000)
-
-        self.horizontalLayout_11.addWidget(self.speedSpinBox)
-
-
-        self.verticalLayout_6.addLayout(self.horizontalLayout_11)
-
-
-        self.horizontalLayout_12.addLayout(self.verticalLayout_6)
-
-
-        self.horizontalLayout_9.addLayout(self.horizontalLayout_12)
-
-
-        self.verticalLayout_15.addWidget(self.playerControlGroup)
-
-
-        self.horizontalLayout_8.addLayout(self.verticalLayout_15)
-
         self.verticalLayout_16 = QVBoxLayout()
         self.verticalLayout_16.setObjectName(u"verticalLayout_16")
-        self.verticalLayout_14 = QVBoxLayout()
-        self.verticalLayout_14.setObjectName(u"verticalLayout_14")
-        self.selectCharacterGroup = QGroupBox(toolWindow)
+        self.tabWidget = QTabWidget(toolWindow)
+        self.tabWidget.setObjectName(u"tabWidget")
+        self.tabWidget.setTabPosition(QTabWidget.TabPosition.North)
+        self.tabWidget.setTabShape(QTabWidget.TabShape.Rounded)
+        self.tabWidget.setElideMode(Qt.TextElideMode.ElideNone)
+        self.tabWidget.setUsesScrollButtons(False)
+        self.tabWidget.setDocumentMode(False)
+        self.tabWidget.setTabsClosable(False)
+        self.tabWidget.setMovable(True)
+        self.tab_4 = QWidget()
+        self.tab_4.setObjectName(u"tab_4")
+        self.selectCharacterGroup = QGroupBox(self.tab_4)
         self.selectCharacterGroup.setObjectName(u"selectCharacterGroup")
-        sizePolicy2.setHeightForWidth(self.selectCharacterGroup.sizePolicy().hasHeightForWidth())
-        self.selectCharacterGroup.setSizePolicy(sizePolicy2)
+        self.selectCharacterGroup.setGeometry(QRect(30, 20, 300, 60))
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.selectCharacterGroup.sizePolicy().hasHeightForWidth())
+        self.selectCharacterGroup.setSizePolicy(sizePolicy1)
         self.selectCharacterGroup.setMinimumSize(QSize(300, 0))
         self.selectCharacterGroup.setMaximumSize(QSize(300, 16777215))
         self.verticalLayout_12 = QVBoxLayout(self.selectCharacterGroup)
@@ -197,17 +64,20 @@ class Ui_toolWindow(object):
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.characterLabel = QLabel(self.selectCharacterGroup)
         self.characterLabel.setObjectName(u"characterLabel")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.characterLabel.sizePolicy().hasHeightForWidth())
-        self.characterLabel.setSizePolicy(sizePolicy4)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.characterLabel.sizePolicy().hasHeightForWidth())
+        self.characterLabel.setSizePolicy(sizePolicy2)
         self.characterLabel.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
 
         self.horizontalLayout_5.addWidget(self.characterLabel)
 
         self.charaComboBox = QComboBox(self.selectCharacterGroup)
         self.charaComboBox.setObjectName(u"charaComboBox")
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Fixed)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
         sizePolicy3.setHeightForWidth(self.charaComboBox.sizePolicy().hasHeightForWidth())
         self.charaComboBox.setSizePolicy(sizePolicy3)
 
@@ -216,19 +86,12 @@ class Ui_toolWindow(object):
 
         self.verticalLayout_12.addLayout(self.horizontalLayout_5)
 
-
-        self.verticalLayout_14.addWidget(self.selectCharacterGroup)
-
-        self.selectShapekeysGroup = QGroupBox(toolWindow)
-        self.selectShapekeysGroup.setObjectName(u"selectShapekeysGroup")
-        sizePolicy1.setHeightForWidth(self.selectShapekeysGroup.sizePolicy().hasHeightForWidth())
-        self.selectShapekeysGroup.setSizePolicy(sizePolicy1)
-        self.selectShapekeysGroup.setMinimumSize(QSize(300, 0))
-        self.selectShapekeysGroup.setMaximumSize(QSize(300, 16777215))
-        self.selectShapekeysGroup.setFlat(False)
-        self.horizontalLayout_4 = QHBoxLayout(self.selectShapekeysGroup)
-        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.shapekeyTab = QTabWidget(self.selectShapekeysGroup)
+        self.groupBox = QGroupBox(self.tab_4)
+        self.groupBox.setObjectName(u"groupBox")
+        self.groupBox.setGeometry(QRect(380, 20, 180, 239))
+        self.verticalLayout_3 = QVBoxLayout(self.groupBox)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.shapekeyTab = QTabWidget(self.groupBox)
         self.shapekeyTab.setObjectName(u"shapekeyTab")
         self.shapekeyTab.setMaximumSize(QSize(16777215, 250))
         self.shapekeyTab.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
@@ -249,8 +112,11 @@ class Ui_toolWindow(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.skLabel_a = QLabel(self.tab)
         self.skLabel_a.setObjectName(u"skLabel_a")
-        sizePolicy1.setHeightForWidth(self.skLabel_a.sizePolicy().hasHeightForWidth())
-        self.skLabel_a.setSizePolicy(sizePolicy1)
+        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Preferred)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.skLabel_a.sizePolicy().hasHeightForWidth())
+        self.skLabel_a.setSizePolicy(sizePolicy4)
         self.skLabel_a.setMinimumSize(QSize(25, 0))
         self.skLabel_a.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
@@ -411,23 +277,173 @@ class Ui_toolWindow(object):
 
         self.shapekeyTab.addTab(self.tab_2, "")
 
-        self.horizontalLayout_4.addWidget(self.shapekeyTab)
+        self.verticalLayout_3.addWidget(self.shapekeyTab)
+
+        self.tabWidget.addTab(self.tab_4, "")
+        self.tab_3 = QWidget()
+        self.tab_3.setObjectName(u"tab_3")
+        self.verticalLayout_15 = QVBoxLayout(self.tab_3)
+        self.verticalLayout_15.setObjectName(u"verticalLayout_15")
+        self.horizontalLayout_4 = QHBoxLayout()
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.groupBox_2 = QGroupBox(self.tab_3)
+        self.groupBox_2.setObjectName(u"groupBox_2")
+        sizePolicy6 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred)
+        sizePolicy6.setHorizontalStretch(0)
+        sizePolicy6.setVerticalStretch(0)
+        sizePolicy6.setHeightForWidth(self.groupBox_2.sizePolicy().hasHeightForWidth())
+        self.groupBox_2.setSizePolicy(sizePolicy6)
+        self.groupBox_2.setMinimumSize(QSize(250, 200))
+        self.groupBox_2.setMaximumSize(QSize(300, 16777215))
+        self.verticalLayout_13 = QVBoxLayout(self.groupBox_2)
+        self.verticalLayout_13.setObjectName(u"verticalLayout_13")
+        self.navigateTextEdit = QTextEdit(self.groupBox_2)
+        self.navigateTextEdit.setObjectName(u"navigateTextEdit")
+        font = QFont()
+        font.setPointSize(11)
+        self.navigateTextEdit.setFont(font)
+
+        self.verticalLayout_13.addWidget(self.navigateTextEdit)
 
 
-        self.verticalLayout_14.addWidget(self.selectShapekeysGroup)
+        self.horizontalLayout_4.addWidget(self.groupBox_2)
+
+        self.groupBox_3 = QGroupBox(self.tab_3)
+        self.groupBox_3.setObjectName(u"groupBox_3")
+        sizePolicy6.setHeightForWidth(self.groupBox_3.sizePolicy().hasHeightForWidth())
+        self.groupBox_3.setSizePolicy(sizePolicy6)
+        self.groupBox_3.setMinimumSize(QSize(250, 200))
+        self.groupBox_3.setMaximumSize(QSize(400, 16777215))
+        self.verticalLayout_14 = QVBoxLayout(self.groupBox_3)
+        self.verticalLayout_14.setObjectName(u"verticalLayout_14")
+        self.verticalLayout_18 = QVBoxLayout()
+        self.verticalLayout_18.setObjectName(u"verticalLayout_18")
+        self.horizontalLayout_14 = QHBoxLayout()
+        self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
+        self.chooseLyricsButton = QPushButton(self.groupBox_3)
+        self.chooseLyricsButton.setObjectName(u"chooseLyricsButton")
+
+        self.horizontalLayout_14.addWidget(self.chooseLyricsButton)
+
+        self.toHiraganaButton = QPushButton(self.groupBox_3)
+        self.toHiraganaButton.setObjectName(u"toHiraganaButton")
+
+        self.horizontalLayout_14.addWidget(self.toHiraganaButton)
+
+        self.toAlphabetButton = QPushButton(self.groupBox_3)
+        self.toAlphabetButton.setObjectName(u"toAlphabetButton")
+
+        self.horizontalLayout_14.addWidget(self.toAlphabetButton)
+
+        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_14.addItem(self.horizontalSpacer_3)
 
 
-        self.verticalLayout_16.addLayout(self.verticalLayout_14)
+        self.verticalLayout_18.addLayout(self.horizontalLayout_14)
+
+        self.lyricsTextEdit = QTextEdit(self.groupBox_3)
+        self.lyricsTextEdit.setObjectName(u"lyricsTextEdit")
+        sizePolicy7 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
+        sizePolicy7.setHorizontalStretch(0)
+        sizePolicy7.setVerticalStretch(0)
+        sizePolicy7.setHeightForWidth(self.lyricsTextEdit.sizePolicy().hasHeightForWidth())
+        self.lyricsTextEdit.setSizePolicy(sizePolicy7)
+        self.lyricsTextEdit.setFont(font)
+
+        self.verticalLayout_18.addWidget(self.lyricsTextEdit)
+
+
+        self.verticalLayout_14.addLayout(self.verticalLayout_18)
+
+
+        self.horizontalLayout_4.addWidget(self.groupBox_3)
+
+
+        self.verticalLayout_15.addLayout(self.horizontalLayout_4)
+
+        self.tabWidget.addTab(self.tab_3, "")
+
+        self.verticalLayout_16.addWidget(self.tabWidget)
+
+        self.horizontalLayout_8 = QHBoxLayout()
+        self.horizontalLayout_8.setSpacing(10)
+        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
+        self.horizontalLayout_8.setContentsMargins(10, 10, 10, 10)
+        self.playerControlGroup = QGroupBox(toolWindow)
+        self.playerControlGroup.setObjectName(u"playerControlGroup")
+        sizePolicy8 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Maximum)
+        sizePolicy8.setHorizontalStretch(0)
+        sizePolicy8.setVerticalStretch(0)
+        sizePolicy8.setHeightForWidth(self.playerControlGroup.sizePolicy().hasHeightForWidth())
+        self.playerControlGroup.setSizePolicy(sizePolicy8)
+        self.playerControlGroup.setMinimumSize(QSize(300, 100))
+        self.playerControlGroup.setMaximumSize(QSize(400, 150))
+        self.playerControlGroup.setSizeIncrement(QSize(0, 0))
+        self.playerControlGroup.setFlat(False)
+        self.playerControlGroup.setCheckable(False)
+        self.horizontalLayout_9 = QHBoxLayout(self.playerControlGroup)
+        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
+        self.horizontalLayout_12 = QHBoxLayout()
+        self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
+        self.playerSlider = QSlider(self.playerControlGroup)
+        self.playerSlider.setObjectName(u"playerSlider")
+        sizePolicy3.setHeightForWidth(self.playerSlider.sizePolicy().hasHeightForWidth())
+        self.playerSlider.setSizePolicy(sizePolicy3)
+        self.playerSlider.setOrientation(Qt.Orientation.Horizontal)
+
+        self.horizontalLayout_12.addWidget(self.playerSlider)
+
+        self.verticalLayout_6 = QVBoxLayout()
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.startEndButton = QPushButton(self.playerControlGroup)
+        self.startEndButton.setObjectName(u"startEndButton")
+        sizePolicy.setHeightForWidth(self.startEndButton.sizePolicy().hasHeightForWidth())
+        self.startEndButton.setSizePolicy(sizePolicy)
+
+        self.verticalLayout_6.addWidget(self.startEndButton)
+
+        self.horizontalLayout_11 = QHBoxLayout()
+        self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
+        self.speedLabel = QLabel(self.playerControlGroup)
+        self.speedLabel.setObjectName(u"speedLabel")
+        sizePolicy4.setHeightForWidth(self.speedLabel.sizePolicy().hasHeightForWidth())
+        self.speedLabel.setSizePolicy(sizePolicy4)
+        self.speedLabel.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+
+        self.horizontalLayout_11.addWidget(self.speedLabel)
+
+        self.speedSpinBox = QDoubleSpinBox(self.playerControlGroup)
+        self.speedSpinBox.setObjectName(u"speedSpinBox")
+        sizePolicy3.setHeightForWidth(self.speedSpinBox.sizePolicy().hasHeightForWidth())
+        self.speedSpinBox.setSizePolicy(sizePolicy3)
+        self.speedSpinBox.setMaximumSize(QSize(85, 16777215))
+        self.speedSpinBox.setMinimum(0.100000000000000)
+        self.speedSpinBox.setMaximum(2.000000000000000)
+        self.speedSpinBox.setSingleStep(0.100000000000000)
+        self.speedSpinBox.setValue(1.000000000000000)
+
+        self.horizontalLayout_11.addWidget(self.speedSpinBox)
+
+
+        self.verticalLayout_6.addLayout(self.horizontalLayout_11)
+
+
+        self.horizontalLayout_12.addLayout(self.verticalLayout_6)
+
+
+        self.horizontalLayout_9.addLayout(self.horizontalLayout_12)
+
+
+        self.horizontalLayout_8.addWidget(self.playerControlGroup)
 
         self.recordingGroup = QGroupBox(toolWindow)
         self.recordingGroup.setObjectName(u"recordingGroup")
-        sizePolicy6 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-        sizePolicy6.setHorizontalStretch(0)
-        sizePolicy6.setVerticalStretch(0)
-        sizePolicy6.setHeightForWidth(self.recordingGroup.sizePolicy().hasHeightForWidth())
-        self.recordingGroup.setSizePolicy(sizePolicy6)
-        self.recordingGroup.setMinimumSize(QSize(250, 110))
-        self.recordingGroup.setMaximumSize(QSize(300, 130))
+        sizePolicy8.setHeightForWidth(self.recordingGroup.sizePolicy().hasHeightForWidth())
+        self.recordingGroup.setSizePolicy(sizePolicy8)
+        self.recordingGroup.setMinimumSize(QSize(250, 100))
+        self.recordingGroup.setMaximumSize(QSize(400, 150))
+        self.recordingGroup.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
         self.horizontalLayout_10 = QHBoxLayout(self.recordingGroup)
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
         self.horizontalLayout_7 = QHBoxLayout()
@@ -438,8 +454,8 @@ class Ui_toolWindow(object):
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.addKeyButton = QPushButton(self.recordingGroup)
         self.addKeyButton.setObjectName(u"addKeyButton")
-        sizePolicy4.setHeightForWidth(self.addKeyButton.sizePolicy().hasHeightForWidth())
-        self.addKeyButton.setSizePolicy(sizePolicy4)
+        sizePolicy2.setHeightForWidth(self.addKeyButton.sizePolicy().hasHeightForWidth())
+        self.addKeyButton.setSizePolicy(sizePolicy2)
         self.addKeyButton.setMaximumSize(QSize(16777215, 50))
         self.addKeyButton.setStyleSheet(u"QPushButton {\u3000\n"
 "\u3000\u3000background-color: rgb(255, 234, 199);\n"
@@ -459,19 +475,19 @@ class Ui_toolWindow(object):
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.applyKeyframesButton = QPushButton(self.recordingGroup)
         self.applyKeyframesButton.setObjectName(u"applyKeyframesButton")
-        sizePolicy7 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-        sizePolicy7.setHorizontalStretch(0)
-        sizePolicy7.setVerticalStretch(0)
-        sizePolicy7.setHeightForWidth(self.applyKeyframesButton.sizePolicy().hasHeightForWidth())
-        self.applyKeyframesButton.setSizePolicy(sizePolicy7)
+        sizePolicy9 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        sizePolicy9.setHorizontalStretch(0)
+        sizePolicy9.setVerticalStretch(0)
+        sizePolicy9.setHeightForWidth(self.applyKeyframesButton.sizePolicy().hasHeightForWidth())
+        self.applyKeyframesButton.setSizePolicy(sizePolicy9)
         self.applyKeyframesButton.setMaximumSize(QSize(16777215, 50))
 
         self.verticalLayout_2.addWidget(self.applyKeyframesButton)
 
         self.exportAsTextButton = QPushButton(self.recordingGroup)
         self.exportAsTextButton.setObjectName(u"exportAsTextButton")
-        sizePolicy7.setHeightForWidth(self.exportAsTextButton.sizePolicy().hasHeightForWidth())
-        self.exportAsTextButton.setSizePolicy(sizePolicy7)
+        sizePolicy9.setHeightForWidth(self.exportAsTextButton.sizePolicy().hasHeightForWidth())
+        self.exportAsTextButton.setSizePolicy(sizePolicy9)
         self.exportAsTextButton.setMaximumSize(QSize(16777215, 50))
 
         self.verticalLayout_2.addWidget(self.exportAsTextButton)
@@ -483,13 +499,13 @@ class Ui_toolWindow(object):
         self.horizontalLayout_10.addLayout(self.horizontalLayout_7)
 
 
-        self.verticalLayout_16.addWidget(self.recordingGroup)
+        self.horizontalLayout_8.addWidget(self.recordingGroup)
 
 
-        self.horizontalLayout_8.addLayout(self.verticalLayout_16)
+        self.verticalLayout_16.addLayout(self.horizontalLayout_8)
 
 
-        self.verticalLayout_13.addLayout(self.horizontalLayout_8)
+        self.verticalLayout_17.addLayout(self.verticalLayout_16)
 
 
         self.retranslateUi(toolWindow)
@@ -502,8 +518,8 @@ class Ui_toolWindow(object):
         self.addKeyButton.released.connect(toolWindow.AddKeyOut)
         self.exportAsTextButton.clicked.connect(toolWindow.ExportTimetagText)
 
-        self.lyricsTab.setCurrentIndex(1)
-        self.shapekeyTab.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
+        self.shapekeyTab.setCurrentIndex(1)
         self.addKeyButton.setDefault(False)
 
 
@@ -512,17 +528,9 @@ class Ui_toolWindow(object):
 
     def retranslateUi(self, toolWindow):
         toolWindow.setWindowTitle(QCoreApplication.translate("toolWindow", u"Form", None))
-        self.lyricsTab.setTabText(self.lyricsTab.indexOf(self.tab_5), QCoreApplication.translate("toolWindow", u"Navigate Key Input", None))
-        self.chooseLyricsButton.setText(QCoreApplication.translate("toolWindow", u" Choose Lyrics File ", None))
-        self.toHiraganaButton.setText(QCoreApplication.translate("toolWindow", u" To Hiragana", None))
-        self.toAlphabetButton.setText(QCoreApplication.translate("toolWindow", u"To Alphabet", None))
-        self.lyricsTab.setTabText(self.lyricsTab.indexOf(self.tab_6), QCoreApplication.translate("toolWindow", u"Edit Lyrics Text", None))
-        self.playerControlGroup.setTitle(QCoreApplication.translate("toolWindow", u"Player Control", None))
-        self.startEndButton.setText(QCoreApplication.translate("toolWindow", u"Play / Stop", None))
-        self.speedLabel.setText(QCoreApplication.translate("toolWindow", u"Speed :", None))
         self.selectCharacterGroup.setTitle(QCoreApplication.translate("toolWindow", u" Select Character ", None))
         self.characterLabel.setText(QCoreApplication.translate("toolWindow", u"Character : ", None))
-        self.selectShapekeysGroup.setTitle(QCoreApplication.translate("toolWindow", u" Select Shapekeys ", None))
+        self.groupBox.setTitle(QCoreApplication.translate("toolWindow", u" Select Shapekey ", None))
         self.skLabel_a.setText(QCoreApplication.translate("toolWindow", u"a :", None))
         self.skLabel_i.setText(QCoreApplication.translate("toolWindow", u"i :", None))
         self.skLabel_u.setText(QCoreApplication.translate("toolWindow", u"u : ", None))
@@ -533,6 +541,16 @@ class Ui_toolWindow(object):
         self.sk_Label_other_2.setText(QCoreApplication.translate("toolWindow", u"Shape 2 :", None))
         self.sk_Label_other_3.setText(QCoreApplication.translate("toolWindow", u"Shape 3 :", None))
         self.shapekeyTab.setTabText(self.shapekeyTab.indexOf(self.tab_2), QCoreApplication.translate("toolWindow", u"Other Shape", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), QCoreApplication.translate("toolWindow", u"Character / Shapekey Settings", None))
+        self.groupBox_2.setTitle(QCoreApplication.translate("toolWindow", u" Timetag Navigation ", None))
+        self.groupBox_3.setTitle(QCoreApplication.translate("toolWindow", u" Lyrics Editor ", None))
+        self.chooseLyricsButton.setText(QCoreApplication.translate("toolWindow", u" Choose Lyrics File ", None))
+        self.toHiraganaButton.setText(QCoreApplication.translate("toolWindow", u" To Hiragana", None))
+        self.toAlphabetButton.setText(QCoreApplication.translate("toolWindow", u"To Alphabet", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QCoreApplication.translate("toolWindow", u"Edit Lyrics / Hit Timetag", None))
+        self.playerControlGroup.setTitle(QCoreApplication.translate("toolWindow", u"Player Control", None))
+        self.startEndButton.setText(QCoreApplication.translate("toolWindow", u"Play / Stop", None))
+        self.speedLabel.setText(QCoreApplication.translate("toolWindow", u"Speed :", None))
         self.recordingGroup.setTitle(QCoreApplication.translate("toolWindow", u" Recording ", None))
         self.addKeyButton.setText(QCoreApplication.translate("toolWindow", u"Add Key", None))
 #if QT_CONFIG(shortcut)
