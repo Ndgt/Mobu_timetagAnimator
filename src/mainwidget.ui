@@ -503,7 +503,7 @@
            <item>
             <widget class="QGroupBox" name="groupBox_3">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -539,13 +539,6 @@
                    <widget class="QPushButton" name="toHiraganaButton">
                     <property name="text">
                      <string> To Hiragana</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QPushButton" name="toAlphabetButton">
-                    <property name="text">
-                     <string>To Alphabet</string>
                     </property>
                    </widget>
                   </item>
@@ -863,8 +856,8 @@
    <slot>PlayStop()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>283</x>
-     <y>398</y>
+     <x>357</x>
+     <y>434</y>
     </hint>
     <hint type="destinationlabel">
      <x>364</x>
@@ -879,8 +872,8 @@
    <slot>ChangePlaySpeed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>294</x>
-     <y>431</y>
+     <x>346</x>
+     <y>464</y>
     </hint>
     <hint type="destinationlabel">
      <x>250</x>
@@ -895,11 +888,11 @@
    <slot>ChooseLyrics()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>73</x>
-     <y>57</y>
+     <x>380</x>
+     <y>96</y>
     </hint>
     <hint type="destinationlabel">
-     <x>749</x>
+     <x>649</x>
      <y>183</y>
     </hint>
    </hints>
@@ -911,28 +904,12 @@
    <slot>ConvertHiragana()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>211</x>
-     <y>70</y>
+     <x>503</x>
+     <y>96</y>
     </hint>
     <hint type="destinationlabel">
-     <x>742</x>
+     <x>649</x>
      <y>70</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>toAlphabetButton</sender>
-   <signal>clicked()</signal>
-   <receiver>toolWindow</receiver>
-   <slot>ConvertAlphabet()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>292</x>
-     <y>70</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>745</x>
-     <y>139</y>
     </hint>
    </hints>
   </connection>
@@ -943,11 +920,11 @@
    <slot>AddKeyIn()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>491</x>
-     <y>388</y>
+     <x>499</x>
+     <y>462</y>
     </hint>
     <hint type="destinationlabel">
-     <x>696</x>
+     <x>649</x>
      <y>0</y>
     </hint>
    </hints>
@@ -959,11 +936,11 @@
    <slot>AddKeyOut()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>491</x>
-     <y>396</y>
+     <x>499</x>
+     <y>462</y>
     </hint>
     <hint type="destinationlabel">
-     <x>679</x>
+     <x>649</x>
      <y>5</y>
     </hint>
    </hints>
@@ -975,12 +952,28 @@
    <slot>ExportTimetagText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>621</x>
-     <y>422</y>
+     <x>617</x>
+     <y>467</y>
     </hint>
     <hint type="destinationlabel">
      <x>1</x>
      <y>430</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>playerSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>toolWindow</receiver>
+   <slot>PlayerSlide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>89</x>
+     <y>439</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>18</x>
+     <y>493</y>
     </hint>
    </hints>
   </connection>
@@ -995,5 +988,6 @@
   <slot>AddKeyIn()</slot>
   <slot>AddKeyOut()</slot>
   <slot>ExportTimetagText()</slot>
+  <slot>PlayerSlide()</slot>
  </slots>
 </ui>
