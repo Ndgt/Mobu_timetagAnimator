@@ -11,14 +11,14 @@ except:
     from PySide2 import QtWidgets
     from shiboken2 import wrapInstance, getCppPointer
 
-'''
+
 # add module search path to the source directory
-import sys,os,inspect
+# delete below when used with python plugin base
+import inspect,os,sys
 CurrentFilePath = inspect.currentframe().f_code.co_filename
 CurrentDir = os.path.dirname(CurrentFilePath)
-targetPath = os.path.join(CurrentDir,"timetagAnimator_Source")
-sys.path.append(targetPath)
-'''
+sys.path.append(CurrentDir)
+sys.path.append(os.path.join(CurrentDir,"timetagAnimator_Source"))
 
 from timetagAnimator_Source import UIdescription
 
