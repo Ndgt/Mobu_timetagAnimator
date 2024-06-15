@@ -7,10 +7,8 @@ def ReadLyrics(filename) -> str:
     f = open(filename, "r")
     data = f.readlines()
     return_string = ""
-
     for add_txt in data:
-        if not add_txt == "\n":
-            return_string += add_txt + "\n"
+            return_string += add_txt
     f.close()
     return return_string
 
