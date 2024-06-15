@@ -125,12 +125,13 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
             # check if the file is text file
             if self.lpopup.FileName[-4:] == ".txt":
                 lyrics = L_Edit.ReadLyrics(self.lpopup.FileName)
-                for line in lyrics.split("\n"):
-                    self.lyricsTextEdit.append(line)
+                if type(lyrics) != UnicodeDecodeError:
+                    for line in lyrics.split("\n"):
+                        self.lyricsTextEdit.append(line)
 
-                # focus on the start
-                self.editorCursor.movePosition(QTextCursor.Start)
-                self.lyricsTextEdit.setTextCursor(self.editorCursor)    
+                    # focus on the start
+                    self.editorCursor.movePosition(QTextCursor.Start)
+                    self.lyricsTextEdit.setTextCursor(self.editorCursor)    
 
             else:
                 FBMessageBox("Caution","Error : Selected file is not text file.","OK")
@@ -203,9 +204,9 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
 
     """ functions about Timetag """
     def AddKeyIn(self):
+        # get click timing and lyrics character
         pressed_time = self.sys.LocalTime.GetSecondDouble()
         pressed_frame = pressed_time*(self.playcontrol.GetTransportFpsValue())
-
         key = self.editorCursor.document().characterAt(self.editorCursor.position())
         
         displaytext = key + "   "
@@ -213,13 +214,14 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         self.navigateTextEdit.insertPlainText(displaytext)
         self.navigateTextEdit.insertPlainText(f"{pressed_frame:.4f}")
         
-        counter = 1
+        # examine next lyrics character
         while True:
+            # move cursor and store next character
             self.editorCursor.movePosition(QTextCursor.Right)
             nextkey = self.editorCursor.document().characterAt(self.editorCursor.position())
-            check = nextkey.encode("shift-jis","replace")
-            if check == b'?':
-                counter += 1
+            
+            # check if the next is line character or space 
+            if nextkey.encode("utf-8") in (b'\xe2\x80\xa8',b'\xe2\x80\xa9', b' '):
                 continue
             else:
                 break
@@ -231,7 +233,7 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         self.navigateTextEdit.insertPlainText(f"{released_frame:.4f}")
         self.navigateTextEdit.insertPlainText("\n")
 
-
+    # export timetag as .txt file
     def ExportTimetagText(self):
         cursor = self.navigateTextEdit.textCursor()
         cursor.select(QTextCursor.Document)
