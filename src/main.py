@@ -40,8 +40,8 @@ class WigTool(FBTool):
         super().__init__(name)
         self.WigHolderObject = WigHolder()
         self.PopulateLayout()
-        self.StartSizeX = 750
-        self.StartSizeY = 475
+        self.StartSizeX = 650
+        self.StartSizeY = 500
         
 
 toolName = "timetagAnimator"
