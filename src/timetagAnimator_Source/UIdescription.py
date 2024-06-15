@@ -14,30 +14,29 @@ except:
 from ui_timetagAnimator import Ui_toolWindow
 import L_Edit
 
-
+# the class of Qt widget which main FBTool holds 
 class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
     def __init__(self, pWigholder):
         super().__init__(pWigholder)
         self.setupUi(self)
 
         """ about charaCombobox """
-        # system event to know importing new file
+        # for system event notification when importing new file
         self.sys = FBSystem()
         self.app = FBApplication()
         self.sys.OnConnectionDataNotify.Add(self.charaComboUpdate)
         self.app.OnFileExit.Add(self.DataNotifyRemove)
         
-        # setup the content 
+        # setup the character combobox
         self.charaComboBox.addItem("character not selected")
         for chara in self.sys.Scene.Characters:
             self.charaComboBox.addItem(chara.Name)
-
-        # connect signal with charaComboBox
+        # connect signal
         self.charaComboBox.currentIndexChanged.connect(self.updateComboBoxes)
 
 
         """ about shapekey comboboxes """
-        # setup the content
+        # setup the shapekey comboboxes
         self.comboboxes = [self.comboBox_1,
                            self.comboBox_2,
                            self.comboBox_3,
@@ -46,12 +45,11 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
                            self.comboBox_6,
                            self.comboBox_7,
                            self.comboBox_8]
-        
         for cbox in self.comboboxes:
             cbox.addItem("shapekey not selected")
 
+        # add shapekey name in case some character already exist
         self.shapeList = self.ReturnCharaShape()
-
         if not self.shapeList is None:
            for name in self.shapeList:
                 for cbox in self.comboboxes:
@@ -59,16 +57,17 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
 
 
         """ about player control """
-        self.nowplayng = False
+        self.nowplayng = False # parameter to know Player condition
         self.playcontrol = FBPlayerControl()
 
 
         """ about TextEditor """
+        # initialize cursor instances
         self.editorCursor = self.lyricsTextEdit.textCursor()
         self.navigatorCursor = self.navigateTextEdit.textCursor()
 
 
-    """ functions about shapekey """
+    """ functions about character combobox """
     def AddDataNotify(self):
         self.charaComboUpdate()
 
