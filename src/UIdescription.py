@@ -4,12 +4,12 @@ from pyfbsdk_additions import*
 # for MotionuBuilder 2025
 try:
     from PySide6 import QtWidgets
-    from PySide6.QtGui import QTextCursor, QMouseEvent
+    from PySide6.QtGui import QTextCursor
 
 # for MotionBuilder -2024
 except:
     from PySide2 import QtWidgets
-    from PySide2.QtGui import QTextCursor, QKeyEvent
+    from PySide2.QtGui import QTextCursor
 
 from ui_timetagAnimator import Ui_toolWindow
 import L_Edit
@@ -59,6 +59,7 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
 
 
         """ about player control """
+        self.nowplayng = False
         self.playcontrol = FBPlayerControl()
 
 
@@ -153,38 +154,50 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
     
     """ functions about Player Control """
     def PlayStop(self):
-        if self.playcontrol.IsPlaying:
+        # Stop
+        if self.nowplayng:
             self.playcontrol.Stop()
+            self.nowplayng = False
             self.startEndButton.setText("Start Recording")
+            startframe = self.playcontrol.LoopStart.GetFrame()
+            endframe = self.playcontrol.LoopStop.GetFrame()
+            currentframe = self.sys.LocalTime.GetFrame()
 
+            # assume that startframe and endframe already setted
+            self.playerSlider.setSliderPosition(int(100*currentframe/(endframe-startframe)))
+
+        # Play
         else:
             # get cursor position at the time
             self.editorCursor = self.lyricsTextEdit.textCursor()
 
             self.playcontrol.Play()
+            self.nowplayng = True
             self.startEndButton.setText("Recording ...")
 
     def ChangePlaySpeed(self, spinboxValue:float):
         # if isPlaying, change speed and restart
-        if self.playcontrol.IsPlaying:
+        if self.nowplayng:
             self.playcontrol.Stop()
             self.playcontrol.SetPlaySpeed(spinboxValue)
             self.playcontrol.Play()
+            self.nowplayng = True
         else:
             self.playcontrol.SetPlaySpeed(spinboxValue)
 
     def PlayerSlide(self, sliderValue:int):
-        # slider returns int : 0 ~ 99
-        self.startframe = self.startframe = self.playcontrol.LoopStart.GetFrame()
-        self.endframe = self.playcontrol.LoopStop.GetFrame()
-        specified_frame_double = (self.endframe - self.startframe) * (sliderValue / 100)
+        # slider returns int : 0 ~ 100
+        startframe = self.playcontrol.LoopStart.GetFrame()
+        endframe = self.playcontrol.LoopStop.GetFrame()
+        specified_frame_double = (endframe - startframe) * (sliderValue / 100)
         specified_frame = int(specified_frame_double)
 
         # restart if isPlaying
-        if self.playcontrol.IsPlaying:
+        if self.nowplayng:
             # set current frame (FBTime(0,0,0,specified frame))
             self.playcontrol.Goto(FBTime(0,0,0,specified_frame))
             self.playcontrol.Play()
+            self.nowplayng = True
         else:
             self.playcontrol.Goto(FBTime(0,0,0,specified_frame))
 
@@ -224,7 +237,6 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         cursor = self.navigateTextEdit.textCursor()
         cursor.select(QTextCursor.Document)
         timetags = cursor.selectedText()
-        print(type(timetags))
         print(timetags)
         cursor.movePosition(QTextCursor.End)
         #cursor = self.navigateTextEdit.textCursor()
