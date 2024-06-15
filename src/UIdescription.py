@@ -1,26 +1,27 @@
 from pyfbsdk import*
 from pyfbsdk_additions import*
 
+# for MotionuBuilder 2025
 try:
     from PySide6 import QtWidgets
     from PySide6.QtGui import QTextCursor, QMouseEvent
+
+# for MotionBuilder -2024
 except:
     from PySide2 import QtWidgets
     from PySide2.QtGui import QTextCursor, QKeyEvent
 
 from ui_timetagAnimator import Ui_toolWindow
-
 import L_Edit
+
 
 class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
     def __init__(self, pWigholder):
         super().__init__(pWigholder)
         self.setupUi(self)
 
-        """
-        about charaCombobox
-        """
-        # system event
+        """ about charaCombobox """
+        # system event to know importing new file
         self.sys = FBSystem()
         self.app = FBApplication()
         self.sys.OnConnectionDataNotify.Add(self.charaComboUpdate)
@@ -30,13 +31,13 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         self.charaComboBox.addItem("character not selected")
         for chara in self.sys.Scene.Characters:
             self.charaComboBox.addItem(chara.Name)
+
         # connect signal with charaComboBox
         self.charaComboBox.currentIndexChanged.connect(self.updateComboBoxes)
 
 
-        """
-        about shapekey comboboxes
-        """
+        """ about shapekey comboboxes """
+        # setup the content
         self.comboboxes = [self.comboBox_1,
                            self.comboBox_2,
                            self.comboBox_3,
@@ -57,16 +58,16 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
                     cbox.addItem(name)
 
 
-        """
-        about player control
-        """
+        """ about player control """
         self.playcontrol = FBPlayerControl()
-        self.startframe = self.playcontrol.LoopStart.GetFrame()
-        self.endframe = self.playcontrol.LoopStop.GetFrame()
 
 
+        """ about TextEditor """
         self.editorCursor = self.lyricsTextEdit.textCursor()
+        self.navigatorCursor = self.navigateTextEdit.textCursor()
 
+
+    """ functions about shapekey """
     def AddDataNotify(self):
         self.charaComboUpdate()
 
@@ -100,8 +101,6 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
                         returnList.append(name)
             return returnList
 
-
-
     # update character combobox when user select new item
     def updateComboBoxes(self):
         for cbox in self.comboboxes:
@@ -112,10 +111,8 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
                 for shapekey in slist:
                     cbox.addItem(shapekey)
 
-
-    '''
-    Lyrics Edit methods
-    '''
+    
+    ''' functions about Lyrics Editting '''
     def ChooseLyrics(self):
         # display popup to select a file
         self.lpopup = FBFilePopup()
@@ -127,55 +124,36 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         if self.lcheck:
             # check if the file is text file
             if self.lpopup.FileName[-4:] == ".txt":
-
                 lyrics = L_Edit.ReadLyrics(self.lpopup.FileName)
                 for line in lyrics.split("\n"):
                     self.lyricsTextEdit.append(line)
+
+                # focus on the start
+                self.editorCursor.movePosition(QTextCursor.Start)
+                self.lyricsTextEdit.setTextCursor(self.editorCursor)    
+
             else:
                 FBMessageBox("Caution","Error : Selected file is not text file.","OK")
 
-            # focus on the start
-            self.editorCursor.movePosition(QTextCursor.Start)
-            self.lyricsTextEdit.setTextCursor(self.editorCursor)
-
 
     def ConvertHiragana(self):
-        lyrics_converted = L_Edit.ConvertLyrics(self.lyricsTextEdit.toPlainText(),"hiragana")
-        if not type(lyrics_converted) == ModuleNotFoundError:
-            self.lyricsTextEdit.clear()
-
-            for line in lyrics_converted.split("\n"):
-                self.lyricsTextEdit.append(line)
-
-            # focus on the start
-            self.editorCursor.movePosition(QTextCursor.Start)
-            self.lyricsTextEdit.setTextCursor(self.editorCursor)
-
-    def ConvertAlphabet(self):
-        lyrics_converted = L_Edit.ConvertLyrics(self.lyricsTextEdit.toPlainText(),"alphabet")
-        if not type(lyrics_converted) == ModuleNotFoundError:
-            self.lyricsTextEdit.clear()
-            # set vowel list
-            vowels = ["a","i","u","e","o"]
-            for line in lyrics_converted.split("\n"):
-                finalline = " "
-                # omit consonant from line
-                for char in line:
-                    finalline += char
-                    # split line with a slash for each vowerl
-                    if char in vowels:
-                        finalline += "/"                
-                self.lyricsTextEdit.append(finalline) 
+        cursor = self.lyricsTextEdit.textCursor()
+        cursor.select(QTextCursor.Document)
+        lyrics = cursor.selectedText()
         
-            # focus on the start
-            self.editorCursor.movePosition(QTextCursor.Start)
-            self.lyricsTextEdit.setTextCursor(self.editorCursor)
+        self.lyricsTextEdit.clear()
+
+        for line in lyrics.split("\n"):
+            lyrics_converted = L_Edit.ConvertLyrics(line)
+            self.lyricsTextEdit.append(lyrics_converted)
+        
+        self.editorCursor.movePosition(QTextCursor.Start)
+        self.lyricsTextEdit.setTextCursor(self.editorCursor)
+
     
-    """
-    Player Control functions
-    """
+    """ functions about Player Control """
     def PlayStop(self):
-        if self.playcontrol.IsPlaying or self.playcontrol.GetEditCurrentTime() == self.playcontrol.LoopStop:
+        if self.playcontrol.IsPlaying:
             self.playcontrol.Stop()
             self.startEndButton.setText("Start Recording")
 
@@ -197,6 +175,8 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
 
     def PlayerSlide(self, sliderValue:int):
         # slider returns int : 0 ~ 99
+        self.startframe = self.startframe = self.playcontrol.LoopStart.GetFrame()
+        self.endframe = self.playcontrol.LoopStop.GetFrame()
         specified_frame_double = (self.endframe - self.startframe) * (sliderValue / 100)
         specified_frame = int(specified_frame_double)
 
@@ -209,18 +189,16 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
             self.playcontrol.Goto(FBTime(0,0,0,specified_frame))
 
 
-
-    """
-    Add Key functions
-    """
+    """ functions about Timetag """
     def AddKeyIn(self):
         pressed_time = self.sys.LocalTime.GetSecondDouble()
         pressed_frame = pressed_time*(self.playcontrol.GetTransportFpsValue())
 
         key = self.editorCursor.document().characterAt(self.editorCursor.position())
         
-        self.navigateTextEdit.append(key)
-        self.navigateTextEdit.insertPlainText("   ")
+        displaytext = key + "   "
+        self.navigateTextEdit.ensureCursorVisible()
+        self.navigateTextEdit.insertPlainText(displaytext)
         self.navigateTextEdit.insertPlainText(f"{pressed_frame:.4f}")
         
         counter = 1
@@ -239,11 +217,9 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         released_frame = released_time*(self.playcontrol.GetTransportFpsValue())
         self.navigateTextEdit.insertPlainText("   ")
         self.navigateTextEdit.insertPlainText(f"{released_frame:.4f}")
+        self.navigateTextEdit.insertPlainText("\n")
 
 
-    """
-    Export Timetag functions
-    """
     def ExportTimetagText(self):
         cursor = self.navigateTextEdit.textCursor()
         cursor.select(QTextCursor.Document)
