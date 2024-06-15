@@ -388,6 +388,7 @@ class Ui_toolWindow(object):
         self.playerSlider.setObjectName(u"playerSlider")
         sizePolicy3.setHeightForWidth(self.playerSlider.sizePolicy().hasHeightForWidth())
         self.playerSlider.setSizePolicy(sizePolicy3)
+        self.playerSlider.setMaximum(100)
         self.playerSlider.setOrientation(Qt.Orientation.Horizontal)
 
         self.horizontalLayout_12.addWidget(self.playerSlider)

@@ -646,6 +646,9 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="maximum">
+               <number>100</number>
+              </property>
               <property name="orientation">
                <enum>Qt::Orientation::Horizontal</enum>
               </property>
