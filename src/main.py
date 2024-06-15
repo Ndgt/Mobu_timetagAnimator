@@ -42,6 +42,10 @@ class WigTool(FBTool):
         self.PopulateLayout()
         self.StartSizeX = 650
         self.StartSizeY = 500
+        [self.MinSizeX, 
+         self.MinSizeY, 
+         self.MaxSizeX, 
+         self.MaxSizeY] = [600, 400, 750, 600]
         
 
 toolName = "timetagAnimator"
