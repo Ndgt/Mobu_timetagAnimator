@@ -18,8 +18,8 @@ def ReadLyrics(filename) -> str:
                         + "Make sure that the lyrics file saved with UTF-8 codec.", "OK")
         return err
 
+
 # function to convert QTextEdit strings 
-# option: hiragana / alphabet
 def ConvertLyrics(editortext:str) -> str:
     try:
         from pykakasi import kakasi
@@ -29,7 +29,6 @@ def ConvertLyrics(editortext:str) -> str:
 
         str_converted = kks.convert(editortext)
         for item in str_converted:
-            # omit uncodable character
             return_hiragana_string += item['hira']
         
         return return_hiragana_string
