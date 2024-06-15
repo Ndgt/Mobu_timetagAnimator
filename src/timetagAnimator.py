@@ -11,12 +11,16 @@ except:
     from PySide2 import QtWidgets
     from shiboken2 import wrapInstance, getCppPointer
 
-# get file path for module import 
-import sys, os, inspect
+'''
+# add module search path to the source directory
+import sys,os,inspect
 CurrentFilePath = inspect.currentframe().f_code.co_filename
-sys.path.append(os.path.dirname(CurrentFilePath))
+CurrentDir = os.path.dirname(CurrentFilePath)
+targetPath = os.path.join(CurrentDir,"timetagAnimator_Source")
+sys.path.append(targetPath)
+'''
 
-import UIdescription
+from timetagAnimator_Source import UIdescription
 
 # declare WidgetHolder class object
 class WigHolder(FBWidgetHolder):
@@ -26,7 +30,7 @@ class WigHolder(FBWidgetHolder):
         return getCppPointer(self.HoldedWidgetObject)[0]
     
 
-# declare as FBTool 
+# declare main tool as FBTool 
 class WigTool(FBTool):
     def PopulateLayout(self):
         x = FBAddRegionParam(0, FBAttachType.kFBAttachLeft,"")
