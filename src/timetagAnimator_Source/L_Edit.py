@@ -4,14 +4,19 @@ from pyfbsdk import FBMessageBox
 
 # function to read txt file
 def ReadLyrics(filename) -> str:
-    f = open(filename, "r")
-    data = f.readlines()
-    return_string = ""
-    for add_txt in data:
-            return_string += add_txt
-    f.close()
-    return return_string
+    try:
+        with open(filename, "r", encoding = "utf-8") as file:
+            data = file.readlines()
+            return_string = ""
+            for add_txt in data:
+                return_string += add_txt
 
+            return return_string
+
+    except UnicodeDecodeError as err:
+        FBMessageBox("Caution", str(err) + "\n" \
+                        + "Make sure that the lyrics file saved with UTF-8 codec.", "OK")
+        return err
 
 # function to convert QTextEdit strings 
 # option: hiragana / alphabet
@@ -24,6 +29,7 @@ def ConvertLyrics(editortext:str) -> str:
 
         str_converted = kks.convert(editortext)
         for item in str_converted:
+            # omit uncodable character
             return_hiragana_string += item['hira']
         
         return return_hiragana_string
