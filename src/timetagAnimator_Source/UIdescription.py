@@ -12,7 +12,9 @@ except:
     from PySide2.QtGui import QTextCursor
 
 from ui_timetagAnimator import Ui_toolWindow
+import shapekey
 import L_Edit
+import os
 import re
 
 # the class of Qt widget which main FBTool holds 
@@ -50,11 +52,13 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
             cbox.addItem("shapekey not selected")
 
         # add shapekey name in case some character already exist
-        self.shapeList = self.ReturnCharaShape()
-        if not self.shapeList is None:
-           for name in self.shapeList:
-                for cbox in self.comboboxes:
-                    cbox.addItem(name)
+        if self.charaComboBox.count() > 1:
+            chara = self.sys.Scene.Characters.__getitem__(self.charaComboBox.currentIndex()-1)
+            self.shapeList = shapekey.All(chara)
+            if not self.shapeList is None:
+                for name in self.shapeList:
+                    for cbox in self.comboboxes:
+                        cbox.addItem(name)
 
 
         """ about player control """
@@ -87,30 +91,12 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
                 if not chara.Name in items:
                     self.charaComboBox.addItem(chara.Name)
 
-    # return All shapekey name in character user selected
-    def ReturnCharaShape(self) -> list:
-        mList = FBModelList()
-        returnList = []
-        # get current selected character
-        if self.charaComboBox.count() > 1:
-            chara = self.sys.Scene.Characters.__getitem__(self.charaComboBox.currentIndex()-1)
-        
-            # get all meshes related to the character
-            chara.GetSkinModelList(mList)
-            for mesh in mList:
-                geo = mesh.Geometry
-                for i in range(geo.ShapeGetCount()):
-                    name = geo.ShapeGetName(i)
-                    if not name in returnList:
-                        returnList.append(name)
-            return returnList
-
     # update character combobox when user select new item
-    def updateComboBoxes(self):
+    def updateComboBoxes(self, chara:FBCharacter):
         for cbox in self.comboboxes:
             cbox.clear()
             cbox.addItem("shapekey not selected")
-            slist = self.ReturnCharaShape()
+            slist = shapekey.All(chara)
             if not slist is None:
                 for shapekey in slist:
                     cbox.addItem(shapekey)
@@ -242,6 +228,11 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         cursor = self.navigateTextEdit.textCursor()
         cursor.select(QTextCursor.Document)
         timetags = cursor.selectedText()
+
+        # export timetag at Lyrics text path
+        with open(os.path.join(self.lpopup.Path,"Timetags.txt"),"a", encoding = "utf-8") as fout:
+            print(timetags,file = fout)
+
         print(timetags)
         cursor.movePosition(QTextCursor.End)
         #cursor = self.navigateTextEdit.textCursor()
