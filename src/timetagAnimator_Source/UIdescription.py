@@ -13,6 +13,7 @@ except:
 
 from ui_timetagAnimator import Ui_toolWindow
 import L_Edit
+import re
 
 # the class of Qt widget which main FBTool holds 
 class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
@@ -65,6 +66,9 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         # initialize cursor instances
         self.editorCursor = self.lyricsTextEdit.textCursor()
         self.navigatorCursor = self.navigateTextEdit.textCursor()
+
+        """ about timetag """
+        self.pattern = r'^[\u3040-\u309F]+$'
 
 
     """ functions about character combobox """
@@ -220,11 +224,11 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
             self.editorCursor.movePosition(QTextCursor.Right)
             nextkey = self.editorCursor.document().characterAt(self.editorCursor.position())
             
-            # check if the next is line character or space 
-            if nextkey.encode("utf-8") in (b'\xe2\x80\xa8',b'\xe2\x80\xa9', b' '):
-                continue
-            else:
+            # check if the next character is Hiragana
+            if re.match(self.pattern, nextkey):
                 break
+            else:
+                continue
 
     def AddKeyOut(self):
         released_time = self.sys.LocalTime.GetSecondDouble()
