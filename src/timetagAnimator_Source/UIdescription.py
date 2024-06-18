@@ -88,8 +88,8 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
     # update character combobox when user select new item
     def updateComboBoxes(self, index : int):
         index = 0
-        for i in range(self.charaComboBox.count):
-            if self.sys.Scene.Characters[i].Name == self.charaComboBox.currenttext:
+        for i in range(self.sys.Scene.Characters.__len__()):
+            if self.sys.Scene.Characters[i].Name == self.charaComboBox.currentText():
                 index = i
  
         chara = self.sys.Scene.Characters[index]
