@@ -115,6 +115,15 @@ def sound(key : str) -> str:
         return "error"
     
 
+# default value to each timetag
+keyAddValue = {
+    "a" : 70, 
+    "i" : 60,
+    "u" : 100,
+    "e" : 80,
+    "o" : 100,
+}
+
 
 # add animation key
 def KeyInput(model:FBModel, shapekeyList:list, pressframeList:list, releaseframeList:list):
@@ -124,15 +133,15 @@ def KeyInput(model:FBModel, shapekeyList:list, pressframeList:list, releaseframe
             if prop.IsAnimated() == False:
                 prop.SetAnimated(True)
             pCurve = prop.GetAnimationNode().FCurve
-            pCurve.KeyAdd(FBTime(0,0,0,int(pressframeList[i]) - 4), 0,
+            pCurve.KeyAdd(FBTime(0,0,0,int(pressframeList[i]) - 5), 0,
                           FBInterpolation.kFBInterpolationCubic,
                            FBTangentMode.kFBTangentModeClampProgressive)
-            pCurve.KeyAdd(FBTime(0,0,0,int(pressframeList[i])), 100,
+            pCurve.KeyAdd(FBTime(0,0,0,int(pressframeList[i])), keyAddValue[prop.Name],
                           FBInterpolation.kFBInterpolationCubic,
                           FBTangentMode.kFBTangentModeClampProgressive)
-            pCurve.KeyAdd(FBTime(0,0,0,int(releaseframeList[i])), 100,
+            pCurve.KeyAdd(FBTime(0,0,0,int(releaseframeList[i])), keyAddValue[prop.Name],
                           FBInterpolation.kFBInterpolationCubic,
                           FBTangentMode.kFBTangentModeClampProgressive)
-            pCurve.KeyAdd(FBTime(0,0,0,int(releaseframeList[i] + 4)), 0,
+            pCurve.KeyAdd(FBTime(0,0,0,int(releaseframeList[i] + 5)), 0,
                           FBInterpolation.kFBInterpolationCubic,
                           FBTangentMode.kFBTangentModeClampProgressive)
