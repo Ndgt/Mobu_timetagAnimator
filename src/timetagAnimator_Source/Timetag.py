@@ -117,21 +117,22 @@ def sound(key : str) -> str:
 
 
 # add animation key
-def KeyAdd(shapekeyList:list, pressframeList:list, releaseframeList:list):
-    counter = 0
-    while True:
-        
-        prop = model.PropertyList.Find(shapekeyList[counter])
-        pCurve = prop.GetAnimationNode().FCurve
-        pCurve = KeyAdd(FBTime(0,0,0,pressframeList[counter] - 4),
-                        0, FBInterpolation.kFBInterpolationCubic,
-                        FBTangentMode.kFBTangentModeClampProgressive)
-        pCurve = KeyAdd(FBTime(0,0,0,pressframeList[counter]),
-                        0, FBInterpolation.kFBInterpolationCubic,
-                        FBTangentMode.kFBTangentModeClampProgressive)
-        pCurve = KeyAdd(FBTime(0,0,0,releaseframeList[counter]),
-                        0, FBInterpolation.kFBInterpolationCubic,
-                        FBTangentMode.kFBTangentModeClampProgressive)
-        pCurve = KeyAdd(FBTime(0,0,0,releaseframeList[counter] + 4),
-                        0, FBInterpolation.kFBInterpolationCubic,
-                        FBTangentMode.kFBTangentModeClampProgressive)
+def KeyInput(model:FBModel, shapekeyList:list, pressframeList:list, releaseframeList:list):
+    for i in range(len(shapekeyList)):
+        prop = model.PropertyList.Find(shapekeyList[i]) 
+        if prop != None:
+            if prop.IsAnimated() == False:
+                prop.SetAnimated(True)
+            pCurve = prop.GetAnimationNode().FCurve
+            pCurve.KeyAdd(FBTime(0,0,0,int(pressframeList[i]) - 4), 0,
+                          FBInterpolation.kFBInterpolationCubic,
+                           FBTangentMode.kFBTangentModeClampProgressive)
+            pCurve.KeyAdd(FBTime(0,0,0,int(pressframeList[i])), 100,
+                          FBInterpolation.kFBInterpolationCubic,
+                          FBTangentMode.kFBTangentModeClampProgressive)
+            pCurve.KeyAdd(FBTime(0,0,0,int(releaseframeList[i])), 100,
+                          FBInterpolation.kFBInterpolationCubic,
+                          FBTangentMode.kFBTangentModeClampProgressive)
+            pCurve.KeyAdd(FBTime(0,0,0,int(releaseframeList[i] + 4)), 0,
+                          FBInterpolation.kFBInterpolationCubic,
+                          FBTangentMode.kFBTangentModeClampProgressive)

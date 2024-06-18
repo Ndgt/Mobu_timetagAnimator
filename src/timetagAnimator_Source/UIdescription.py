@@ -238,6 +238,26 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         with open(os.path.join(self.lpopup.Path,"Timetags.txt"),"w", encoding = "utf-8") as fout:
             print(timetags,file = fout)
 
-        print(timetags)
+        self.ApplyTimetag()
         cursor.movePosition(QTextCursor.End)
         #cursor = self.navigateTextEdit.textCursor()
+
+    
+    # apply timetag to character
+    def ApplyTimetag(self):
+        cursor = self.navigateTextEdit.textCursor()
+        cursor.select(QTextCursor.Document)
+        timetags_raw = cursor.selectedText().split()
+
+        timetags = [timetags_raw[i:i + 3] for i in range(0, len(timetags_raw), 3)]
+
+        shapekeyList = [Timetag.sound(group[0]) for group in timetags if len(group) > 0]
+        pressframeList = [float(group[1]) for group in timetags if len(group) > 1]
+        releaseframeList = [float(group[2]) for group in timetags if len(group) > 2]
+
+        print(shapekeyList)
+        print(pressframeList)
+        print(releaseframeList)
+
+        model = FBFindModelByLabelName("Face")
+        Timetag.KeyInput(model, shapekeyList, pressframeList, releaseframeList)
