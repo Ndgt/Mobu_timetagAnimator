@@ -472,16 +472,16 @@ class Ui_toolWindow(object):
 
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.applyKeyframesButton = QPushButton(self.recordingGroup)
-        self.applyKeyframesButton.setObjectName(u"applyKeyframesButton")
+        self.applyTimetagsButton = QPushButton(self.recordingGroup)
+        self.applyTimetagsButton.setObjectName(u"applyTimetagsButton")
         sizePolicy10 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
         sizePolicy10.setHorizontalStretch(0)
         sizePolicy10.setVerticalStretch(0)
-        sizePolicy10.setHeightForWidth(self.applyKeyframesButton.sizePolicy().hasHeightForWidth())
-        self.applyKeyframesButton.setSizePolicy(sizePolicy10)
-        self.applyKeyframesButton.setMaximumSize(QSize(16777215, 50))
+        sizePolicy10.setHeightForWidth(self.applyTimetagsButton.sizePolicy().hasHeightForWidth())
+        self.applyTimetagsButton.setSizePolicy(sizePolicy10)
+        self.applyTimetagsButton.setMaximumSize(QSize(16777215, 50))
 
-        self.verticalLayout_2.addWidget(self.applyKeyframesButton)
+        self.verticalLayout_2.addWidget(self.applyTimetagsButton)
 
         self.exportAsTextButton = QPushButton(self.recordingGroup)
         self.exportAsTextButton.setObjectName(u"exportAsTextButton")
@@ -516,6 +516,7 @@ class Ui_toolWindow(object):
         self.addKeyButton.released.connect(toolWindow.AddKeyOut)
         self.exportAsTextButton.clicked.connect(toolWindow.ExportTimetagText)
         self.playerSlider.valueChanged.connect(toolWindow.PlayerSlide)
+        self.applyTimetagsButton.clicked.connect(toolWindow.ApplyTimetag)
 
         self.tabWidget.setCurrentIndex(1)
         self.shapekeyTab.setCurrentIndex(1)
@@ -554,7 +555,7 @@ class Ui_toolWindow(object):
 #if QT_CONFIG(shortcut)
         self.addKeyButton.setShortcut(QCoreApplication.translate("toolWindow", u"Ctrl+S", None))
 #endif // QT_CONFIG(shortcut)
-        self.applyKeyframesButton.setText(QCoreApplication.translate("toolWindow", u"Apply to Face", None))
+        self.applyTimetagsButton.setText(QCoreApplication.translate("toolWindow", u"Apply to Face", None))
         self.exportAsTextButton.setText(QCoreApplication.translate("toolWindow", u"Export as .txt", None))
     # retranslateUi
 

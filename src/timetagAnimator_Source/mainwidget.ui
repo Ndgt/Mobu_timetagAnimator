@@ -800,7 +800,7 @@
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_2">
               <item>
-               <widget class="QPushButton" name="applyKeyframesButton">
+               <widget class="QPushButton" name="applyTimetagsButton">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -980,6 +980,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>applyTimetagsButton</sender>
+   <signal>clicked()</signal>
+   <receiver>toolWindow</receiver>
+   <slot>ApplyTimetag()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>562</x>
+     <y>420</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>644</x>
+     <y>381</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>Play()</slot>
@@ -992,5 +1008,6 @@
   <slot>AddKeyOut()</slot>
   <slot>ExportTimetagText()</slot>
   <slot>PlayerSlide()</slot>
+  <slot>ApplyTimetag()</slot>
  </slots>
 </ui>
