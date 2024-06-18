@@ -12,10 +12,12 @@ except:
     from PySide2.QtGui import QTextCursor
 
 from ui_timetagAnimator import Ui_toolWindow
-import shapekey
+import shapekeys
+import Timetag
 import L_Edit
 import os
 import re
+
 
 # the class of Qt widget which main FBTool holds 
 class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
@@ -51,15 +53,6 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         for cbox in self.comboboxes:
             cbox.addItem("shapekey not selected")
 
-        # add shapekey name in case some character already exist
-        if self.charaComboBox.count() > 1:
-            chara = self.sys.Scene.Characters.__getitem__(self.charaComboBox.currentIndex()-1)
-            self.shapeList = shapekey.All(chara)
-            if not self.shapeList is None:
-                for name in self.shapeList:
-                    for cbox in self.comboboxes:
-                        cbox.addItem(name)
-
 
         """ about player control """
         self.nowplayng = False # parameter to know Player condition
@@ -72,6 +65,7 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         self.navigatorCursor = self.navigateTextEdit.textCursor()
 
         """ about timetag """
+        # for detect hiragana
         self.pattern = r'^[\u3040-\u309F]+$'
 
 
@@ -92,11 +86,17 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
                     self.charaComboBox.addItem(chara.Name)
 
     # update character combobox when user select new item
-    def updateComboBoxes(self, chara:FBCharacter):
+    def updateComboBoxes(self, index : int):
+        index = 0
+        for i in range(self.charaComboBox.count):
+            if self.sys.Scene.Characters[i].Name == self.charaComboBox.currenttext:
+                index = i
+ 
+        chara = self.sys.Scene.Characters[index]
         for cbox in self.comboboxes:
             cbox.clear()
             cbox.addItem("shapekey not selected")
-            slist = shapekey.All(chara)
+            slist = shapekeys.All(chara)
             if not slist is None:
                 for shapekey in slist:
                     cbox.addItem(shapekey)
@@ -198,11 +198,9 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         pressed_time = self.sys.LocalTime.GetSecondDouble()
         pressed_frame = pressed_time*(self.playcontrol.GetTransportFpsValue())
         key = self.editorCursor.document().characterAt(self.editorCursor.position())
-        
-        displaytext = key + "   "
+
         self.navigateTextEdit.ensureCursorVisible()
-        self.navigateTextEdit.insertPlainText(displaytext)
-        self.navigateTextEdit.insertPlainText(f"{pressed_frame:.4f}")
+        self.navigateTextEdit.insertPlainText(key)
         
         # examine next lyrics character
         while True:
@@ -211,10 +209,16 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
             nextkey = self.editorCursor.document().characterAt(self.editorCursor.position())
             
             # check if the next character is Hiragana
-            if re.match(self.pattern, nextkey):
+            if nextkey.encode("unicode-escape") in Timetag.str_leave:
+                self.navigateTextEdit.insertPlainText(nextkey)
+                continue
+            elif re.match(self.pattern, nextkey):
                 break
             else:
                 continue
+        
+        self.navigateTextEdit.insertPlainText(f"   {pressed_frame:.4f}   ")
+
 
     def AddKeyOut(self):
         released_time = self.sys.LocalTime.GetSecondDouble()
@@ -223,6 +227,7 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         self.navigateTextEdit.insertPlainText(f"{released_frame:.4f}")
         self.navigateTextEdit.insertPlainText("\n")
 
+
     # export timetag as .txt file
     def ExportTimetagText(self):
         cursor = self.navigateTextEdit.textCursor()
@@ -230,7 +235,7 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
         timetags = cursor.selectedText()
 
         # export timetag at Lyrics text path
-        with open(os.path.join(self.lpopup.Path,"Timetags.txt"),"a", encoding = "utf-8") as fout:
+        with open(os.path.join(self.lpopup.Path,"Timetags.txt"),"w", encoding = "utf-8") as fout:
             print(timetags,file = fout)
 
         print(timetags)
