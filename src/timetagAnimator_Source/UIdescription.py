@@ -245,19 +245,22 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
     
     # apply timetag to character
     def ApplyTimetag(self):
+        # read whole timetag text 
         cursor = self.navigateTextEdit.textCursor()
         cursor.select(QTextCursor.Document)
         timetags_raw = cursor.selectedText().split()
 
+        # extract the set of timetags
         timetags = [timetags_raw[i:i + 3] for i in range(0, len(timetags_raw), 3)]
 
-        shapekeyList = [Timetag.sound(group[0]) for group in timetags if len(group) > 0]
-        pressframeList = [float(group[1]) for group in timetags if len(group) > 1]
-        releaseframeList = [float(group[2]) for group in timetags if len(group) > 2]
+        # make lists from timetags
+        for data in timetags:
+            shapekeyList, pressframeList, releaseframeList = list()*3 
+            if len(data) == 3:    
+                shapekeyList.append(Timetag.sound(data[0]))
+                pressframeList.append(float(data[1]))
+                releaseframeList.append(float(data[2]))
 
-        print(shapekeyList)
-        print(pressframeList)
-        print(releaseframeList)
-
+        # apply to model
         model = FBFindModelByLabelName("Face")
         Timetag.KeyInput(model, shapekeyList, pressframeList, releaseframeList)
