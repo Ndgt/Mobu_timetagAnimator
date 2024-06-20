@@ -102,7 +102,6 @@ str_o = [
     b'\\u3092',
 ]
 
-
 hiraSound = [str_a, str_i, str_u, str_e, str_o]
 
 # return corresponding sound
