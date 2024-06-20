@@ -64,7 +64,7 @@ str_u = [
     b'\\u3045', b'\\u3046',
     b'\\u304f', b'\\u3050',
     b'\\u3059', b'\\u305a',
-    b'\\u3063', b'\\u3064',
+    b'\\u3064',
     b'\\u306c',
     b'\\u3075', b'\\u3076', b'\\u3077',
     b'\\u3080',
@@ -107,11 +107,14 @@ hiraSound = [str_a, str_i, str_u, str_e, str_o]
 # return corresponding sound
 def sound(key : str) -> str:
     for strList in hiraSound:
-        if key.encode("unicode-escape") in strList:
+        if key[-1].encode("unicode-escape") in strList:
             return  strList[0]
-    
-    else:
-        return "error"
+        
+        # for small "tu" and cloth mouth "n"
+        elif key[-1].encode("unicode-escape") in (b'\\u3063',b'\\u3093'):
+            if key[0].encode("unicode-escape") in strList:
+                return  strList[0]
+
     
 
 # default value to each timetag
@@ -125,22 +128,24 @@ keyAddValue = {
 
 
 # add animation key
-def KeyInput(model:FBModel, shapekeyList:list, pressframeList:list, releaseframeList:list):
-    for i in range(len(shapekeyList)):
-        prop = model.PropertyList.Find(shapekeyList[i]) 
+def KeyInput(model:FBModel, shapekeyStream:list, pressframeStream:list, releaseframeStream:list):
+    fps = FBPlayerControl().GetTransportFps()
+    for i in range(len(shapekeyStream)):
+        prop = model.PropertyList.Find(shapekeyStream[i]) 
         if prop != None:
             if prop.IsAnimated() == False:
                 prop.SetAnimated(True)
             pCurve = prop.GetAnimationNode().FCurve
-            pCurve.KeyAdd(FBTime(0,0,0,int(pressframeList[i]) - 5), 0,
+            pCurve.KeyAdd(FBTime(0,0,0,int(pressframeStream[i]) - fps//10), 0,
                           FBInterpolation.kFBInterpolationCubic,
                            FBTangentMode.kFBTangentModeClampProgressive)
-            pCurve.KeyAdd(FBTime(0,0,0,int(pressframeList[i])), keyAddValue[prop.Name],
+            pCurve.KeyAdd(FBTime(0,0,0,int(pressframeStream[i])), keyAddValue[prop.Name],
                           FBInterpolation.kFBInterpolationCubic,
                           FBTangentMode.kFBTangentModeClampProgressive)
-            pCurve.KeyAdd(FBTime(0,0,0,int(releaseframeList[i])), keyAddValue[prop.Name],
+            pCurve.KeyAdd(FBTime(0,0,0,int(releaseframeStream[i])), keyAddValue[prop.Name],
                           FBInterpolation.kFBInterpolationCubic,
                           FBTangentMode.kFBTangentModeClampProgressive)
-            pCurve.KeyAdd(FBTime(0,0,0,int(releaseframeList[i] + 5)), 0,
+            pCurve.KeyAdd(FBTime(0,0,0,int(releaseframeStream[i] + fps//10)), 0,
                           FBInterpolation.kFBInterpolationCubic,
                           FBTangentMode.kFBTangentModeClampProgressive)
+            print(prop.Name," in frame ", pressframeStream[i], " applied")

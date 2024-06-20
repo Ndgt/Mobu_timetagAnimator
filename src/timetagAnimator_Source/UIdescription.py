@@ -252,15 +252,15 @@ class HoldedWidget(QtWidgets.QWidget, Ui_toolWindow):
 
         # extract the set of timetags
         timetags = [timetags_raw[i:i + 3] for i in range(0, len(timetags_raw), 3)]
-
+        shapekeyStream, pressframeStream, releaseframeStream = list(),list(),list()
+        
         # make lists from timetags
         for data in timetags:
-            shapekeyList, pressframeList, releaseframeList = list()*3 
-            if len(data) == 3:    
-                shapekeyList.append(Timetag.sound(data[0]))
-                pressframeList.append(float(data[1]))
-                releaseframeList.append(float(data[2]))
+            if len(data) == 3:
+                shapekeyStream.append(Timetag.sound(data[0]))
+                pressframeStream.append(float(data[1]))
+                releaseframeStream.append(float(data[2]))
 
         # apply to model
         model = FBFindModelByLabelName("Face")
-        Timetag.KeyInput(model, shapekeyList, pressframeList, releaseframeList)
+        Timetag.KeyInput(model, shapekeyStream, pressframeStream, releaseframeStream)
